@@ -28,7 +28,7 @@
 
     <body>
         <div class="login-container d-flex justify-content-center align-items-center ">
-            <form id="form" class="login-form text-center" onsubmit="checkInputs()">
+            <form id="form" class="login-form text-center" onsubmit="return checkInputs()">
                 <h1 class="mb-3 font-weight-light text-uppercase">Singup</h1>
                 <div class="form-group">
                     <input type="text" class="form-control rounded-pill form-control-lg" id="company_name" name="company_name" placeholder="Company Name">
@@ -71,7 +71,15 @@
             </form>
         </div>    
 
-    
+          <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+  
+    <!-- <script src="./js/dataentry.js"></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyC7ubk5M_UE8x-2A01E7VzLe3JsWE895-w"></script>
     <script src="./js/signup.js"></script>  
    <script>
@@ -89,13 +97,8 @@
       var scroll = new SmoothScroll('a[href*="#"]');
   </script>
   
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
 
-<script src="./js/dataentry.js"></script>
+
 </body>
 </html>

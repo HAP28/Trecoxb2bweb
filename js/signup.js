@@ -1,3 +1,21 @@
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBtDws3qsD5G7za-yQZsdM7sw6pQac_B04",
+    authDomain: "trecox-ed1bf.firebaseapp.com",
+    databaseURL: "https://trecox-ed1bf.firebaseio.com", //https://trecox-ed1bf.firebaseio.com/
+    projectId: "trecox-ed1bf",
+    storageBucket: "trecox-ed1bf.appspot.com",
+    messagingSenderId: "1093903555653",
+    appId: "1:1093903555653:web:98fc37108b75e08aa9d72c",
+    measurementId: "G-7GCC8D01GL"
+  };
+  // Initialize Firebase
+  
+
+
+
+
+
 const form = document.getElementById('form');
 const company_name = document.getElementById('company_name');
 const company_email = document.getElementById('company_email');
@@ -8,6 +26,7 @@ const company_contact = document.getElementById('company_contact');
 
 
 function checkInputs(){
+    // alert('f');
     const companyName = company_name.value.trim();
     const companyEmail = company_email.value.trim();
     const companyPass = company_pass.value.trim();
@@ -65,6 +84,7 @@ function checkInputs(){
         setSuccessFor(company_location);
     }
     if(n == 1 && e == 1 && c == 1 && cc == 1 && cl == 1 && p == 1){
+        submitForm(e);
         return true;
     } else{
         return false;
@@ -87,4 +107,36 @@ function setSuccessFor(input){
 
 function isEmail(email){
     return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email);
+}
+
+
+
+
+firebase.initializeApp(firebaseConfig);
+var refr = firebase.database().ref('company');
+
+function submitForm(){
+
+    var cname = getValue('company_name');
+    var email = getValue('company_email');
+    var pass = getValue('company_pass');
+    var loc = getValue('company_location');
+    var contact = getValue('company_contact');
+
+    inputData(cname,email,pass,loc,contact);
+}
+
+function getValue(id){
+    return document.getElementById(id).value;
+}
+
+function inputData(cname,email,pass,loc,contact){
+    var dataRef = refr.push();
+    dataRef.set({
+        cname:cname,
+        email:email,
+        password:pass,
+        location:loc,
+        contact:contact
+      });
 }
