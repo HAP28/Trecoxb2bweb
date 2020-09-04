@@ -1,0 +1,101 @@
+<!-- <color name="colorPrimary">#0b4870</color>
+    <color name="colorPrimaryDark">#002144</color>
+    <color name="colorPrimaryLight">#46739f</color>
+    <color name="colorAccent">#ffbe55</color>
+    <color name="colorAccentLight">#fff085</color>
+    <color name="colorAccentDark">#c88e24</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#BEBEBE</color>
+    <color name="greyDark">#373539</color> -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        <!-- font awesome -->
+        <link rel="stylesheet" href="./css/fontawesome/css/all.css">
+
+    <link rel="stylesheet" href="./css/signup.css">
+    <title>register</title>
+    </head>
+
+    <body>
+        <div class="login-container d-flex justify-content-center align-items-center ">
+            <form id="form" class="login-form text-center" onsubmit="checkInputs()">
+                <h1 class="mb-3 font-weight-light text-uppercase">Singup</h1>
+                <div class="form-group">
+                    <input type="text" class="form-control rounded-pill form-control-lg" id="company_name" name="company_name" placeholder="Company Name">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control rounded-pill form-control-lg" id="company_email" name="company_email" placeholder="Email">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-group">
+                    <input type="password" minlength="8" class="form-control rounded-pill form-control-lg" id="company_pass" name="company_pass" placeholder="Password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-group">
+                    <input type="password" minlength="8" class="form-control rounded-pill form-control-lg" id="company_confirm_pass" name="company_confirm_pass" placeholder="Confirm Password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-group">
+                    <input type="text"class="form-control rounded-pill form-control-lg" id="company_location" name="company_location" placeholder="Location">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control rounded-pill form-control-lg" id="company_contact" name="company_contact" placeholder="Contact number">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <input type="submit" id="submit" value="Register Now" class="btn btn-custom btn-block rounded-pill btn-lg text-uppercase mt-5">
+                <p class="mt-3 font-weight-normal">Already have an account ?  <a href="./login.php"><strong>Login Now</strong></a></p>
+            </form>
+        </div>    
+
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyC7ubk5M_UE8x-2A01E7VzLe3JsWE895-w"></script>
+    <script src="./js/signup.js"></script>  
+   <script>
+       var autocomplete = new google.maps.places.Autocomplete(document.getElementById('company_location'));
+   </script>
+
+   
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+  <!-- smooth scroll -->
+  <script src="./js/smooth-scroll.js"></script>
+  <script>
+      var scroll = new SmoothScroll('a[href*="#"]');
+  </script>
+  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+<script src="./js/dataentry.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+body{
+    font-size: 14px;
+    background-image: linear-gradient(to left,#002144,#46739f);
+    color: #ffbe55;
+}
+.login-container{
+    height: 100vh;
+    width: 100%;
+}
+.login-form{
+    max-width: 100%;
+    width: 370px;
+    padding: 15px;
+    margin: auto;
+} 
+.form-control{
+    font-size: 15px;
+    max-height: 40px;
+    font-weight: 500;
+}
+.form-control:focus{
+    border-color: #ffbe55;
+    box-shadow: 0 0 0 0.2rem rgb(255, 240, 133);
+}
+.forgot-link{
+    font-size: 13px;
+}
+.forgot-link label{
+    margin-bottom: 0;
+}
+.login-form a{
+    text-decoration: none;
+    color: #d4dde6;
+}
+.login-form a:hover{
+    color: #ffbe55;
+}
+.btn-custom{
+    background: #ffbe55;
+    border-color: #ffbe55;
+    color: #002144;
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 43px;
+}
+.btn-custom:focus,
+.btn-custom:hover,
+.btn-custom:active,
+.btn-custom:active:focus{
+    background: #c88e24;
+    border-color: #c88e24;
+    color: #ffffff;
+}
+.btn-custom:focus{
+    box-shadow: 0 0 0 0.2rem rgb(200, 142, 36);
+}
+
+
+/* validation */
+
+.form-group{
+    position: relative;
+    padding-top: 10px;
+}
+
+.form-group i{
+    position: absolute;
+    top: 24px;
+    right: 10px;
+    visibility: hidden;
+}
+.form-group small{
+    position: absolute;
+    bottom: 10;
+    right: 0px;
+    color: rgb(238, 178, 178);
+    visibility: hidden;
+    text-align: right;
+}
+
+.form-group.success input{
+    border-color: greenyellow;
+    border-width: 2px;
+    box-shadow: 0 0 0 0rem rgb(255, 240, 133);
+}
+.form-group.error input{
+    border-color: red;
+    border-width: 2px;
+    box-shadow: 0 0 0 0rem rgb(255, 240, 133);
+}
+.form-group.success i.fa-check-circle{
+    visibility: visible;
+    color: green;
+}
+.form-group.error i.fa-exclamation-circle{
+    visibility: visible;
+    color: red;
+}
+.form-group.error small{
+    visibility: visible;
+}
