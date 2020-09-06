@@ -82,6 +82,19 @@ function checkInputs(){
         setSuccessFor(company_location);
     }
     if(n == 1 && e == 1 && c == 1 && cc == 1 && cl == 1 && p == 1){
+        cname = document.getElementById('company_name').value;
+        email = document.getElementById('company_email').value;
+        contact = document.getElementById('company_contact').value;
+        pass = document.getElementById('company_pass').value;
+        loc = document.getElementById('company_location').value;
+
+    firebase.database().ref('company/'+cname).set({
+        Company:cname,
+        Email:email,
+        Password:pass,
+        Contact:contact,
+        Location:loc
+    });
         return true;
     } else{
         return false;
@@ -108,18 +121,3 @@ function isEmail(email){
 
 var cname,email,pass,loc,contact;
 
-document.getElementById('submit').onclick = function(){
-    cname = document.getElementById('company_name').value;
-    email = document.getElementById('company_email').value;
-    contact = document.getElementById('company_contact').value;
-    pass = document.getElementById('company_pass').value;
-    loc = document.getElementById('company_location').value;
-
-    firebase.database().ref('company/'+cname).set({
-        Company:cname,
-        Email:email,
-        Password:pass,
-        Contact:contact,
-        Location:loc
-    });
-}
