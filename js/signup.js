@@ -10,12 +10,10 @@
     measurementId: "G-7GCC8D01GL"
   };
   // Initialize Firebase
-  
+  firebase.initializeApp(firebaseConfig);
+ 
 
-
-
-
-
+ 
 const form = document.getElementById('form');
 const company_name = document.getElementById('company_name');
 const company_email = document.getElementById('company_email');
@@ -84,7 +82,6 @@ function checkInputs(){
         setSuccessFor(company_location);
     }
     if(n == 1 && e == 1 && c == 1 && cc == 1 && cl == 1 && p == 1){
-        submitForm(e);
         return true;
     } else{
         return false;
@@ -109,34 +106,20 @@ function isEmail(email){
     return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email);
 }
 
+var cname,email,pass,loc,contact;
 
+document.getElementById('submit').onclick = function(){
+    cname = document.getElementById('company_name').value;
+    email = document.getElementById('company_email').value;
+    contact = document.getElementById('company_contact').value;
+    pass = document.getElementById('company_pass').value;
+    loc = document.getElementById('company_location').value;
 
-
-firebase.initializeApp(firebaseConfig);
-var refr = firebase.database().ref('company');
-
-function submitForm(){
-
-    var cname = getValue('company_name');
-    var email = getValue('company_email');
-    var pass = getValue('company_pass');
-    var loc = getValue('company_location');
-    var contact = getValue('company_contact');
-
-    inputData(cname,email,pass,loc,contact);
-}
-
-function getValue(id){
-    return document.getElementById(id).value;
-}
-
-function inputData(cname,email,pass,loc,contact){
-    var dataRef = refr.push();
-    dataRef.set({
-        cname:cname,
-        email:email,
-        password:pass,
-        location:loc,
-        contact:contact
-      });
+    firebase.database().ref('company/'+cname).set({
+        Company:cname,
+        Email:email,
+        Password:pass,
+        Contact:contact,
+        Location:loc
+    });
 }
