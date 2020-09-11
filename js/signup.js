@@ -12,7 +12,7 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
  
-
+var data = firebase.database();
  
 const form = document.getElementById('form');
 const company_name = document.getElementById('company_name');
@@ -23,8 +23,33 @@ const company_location = document.getElementById('company_location');
 const company_contact = document.getElementById('company_contact');
 
 
-function checkInputs(){
-    // alert('f');
+function setErrorFor(input, message) {
+    const formGroup = input.parentElement;
+    const small = formGroup.querySelector('small');
+
+    small.innerText = message;
+    formGroup.className = 'form-group error';
+}
+
+function setSuccessFor(input){
+    const formGroup = input.parentElement;
+    
+    formGroup.className = 'form-group success';
+}
+
+function isEmail(email){
+    return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email);
+}
+
+var cname,email,pass,loc,contact;
+
+document.getElementById('submit').onclick = function(){
+    cname = document.getElementById('company_name').value;
+    email = document.getElementById('company_email').value;
+    contact = document.getElementById('company_contact').value;
+    pass = document.getElementById('company_pass').value;
+    loc = document.getElementById('company_location').value;
+
     const companyName = company_name.value.trim();
     const companyEmail = company_email.value.trim();
     const companyPass = company_pass.value.trim();
@@ -80,46 +105,19 @@ function checkInputs(){
     } else {
         cl = 1;
         setSuccessFor(company_location);
-    }
+    }   
     if(n == 1 && e == 1 && c == 1 && cc == 1 && cl == 1 && p == 1){
-        return true;
-    } else{
-        return false;
+        data.ref('company/'+cname).set({
+            Company:cname,
+            Email:email,
+            Password:pass,
+            Contact:contact,
+            Location:loc
+        });
+        checkInputs = () => {return true;}
+        form.action = "./dashboard.html";
+
+    } else {
+        checkInputs = () => {return false;}
     }
-}
-
-function setErrorFor(input, message) {
-    const formGroup = input.parentElement;
-    const small = formGroup.querySelector('small');
-
-    small.innerText = message;
-    formGroup.className = 'form-group error';
-}
-
-function setSuccessFor(input){
-    const formGroup = input.parentElement;
-    
-    formGroup.className = 'form-group success';
-}
-
-function isEmail(email){
-    return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email);
-}
-
-var cname,email,pass,loc,contact;
-
-document.getElementById('submit').onclick = function(){
-    cname = document.getElementById('company_name').value;
-    email = document.getElementById('company_email').value;
-    contact = document.getElementById('company_contact').value;
-    pass = document.getElementById('company_pass').value;
-    loc = document.getElementById('company_location').value;
-
-    firebase.database().ref('company/'+cname).set({
-        Company:cname,
-        Email:email,
-        Password:pass,
-        Contact:contact,
-        Location:loc
-    });
 }
