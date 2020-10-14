@@ -59,7 +59,9 @@
     
         firebase.auth().onAuthStateChanged(function(user){
             if(user){
-                document.getElementById('form').action = '../dashboard.html';
+                window.location.href = 'dashboard.html';
+                console.log(user);
+                //console.log('user');
             } else{
                 console.log('nope');
             }
