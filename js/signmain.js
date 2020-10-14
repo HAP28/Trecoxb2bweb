@@ -12,10 +12,10 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
  
 var data = firebase.database();
-
+const company = sessionStorage.getItem('cname');
 window.addEventListener('load',() => {
-    const params = (new URL(document.location)).searchParams;
-    const company = params.get('company_name').toString();
+    // const params = (new URL(document.location)).searchParams;
+    // const company = params.get('company_name');
     data.ref('company/'+company).on('value',function(snapshot){
         document.getElementById('name').innerHTML = snapshot.val().Company;
         document.getElementById('email').innerHTML = snapshot.val().Email;

@@ -18,16 +18,17 @@
     
     <!-- font awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-        <!-- font awesome -->
-        <link rel="stylesheet" href="./css/fontawesome/css/all.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="./css/fontawesome/css/all.css">
 
 <link rel="stylesheet" href="./css/login.css">
+        
     <title>Login</title>
 </head>
 <body>
 <div class="login-container d-flex align-items-center justify-content-center">
-        <form class="login-form text-center">
+        <form id="form" class="login-form text-center">
             <h1 class="mb-5 font-weight-light text-uppercase">Login</h1>
             <div class="form-group">
                 <input type="email" id="company" class="form-control rounded-pill form-control-lg" name="company_name" placeholder="Email">
@@ -47,10 +48,23 @@
         </form>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script> 
-    <script src="./js/login.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script> 
+        <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script> 
+
+    <script src="./js/index.js"></script>
+    <script>
+    
+        firebase.auth().onAuthStateChanged(function(user){
+            if(user){
+                document.getElementById('form').action = '../dashboard.html';
+            } else{
+                console.log('nope');
+            }
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

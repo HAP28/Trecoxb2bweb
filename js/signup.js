@@ -43,7 +43,7 @@ function isEmail(email){
 
 var cname,email,pass,loc,contact;
 
-document.getElementById('submit').onclick = function(){
+document.getElementById('submit').onclick = function(e){
     cname = document.getElementById('company_name').value;
     email = document.getElementById('company_email').value;
     contact = document.getElementById('company_contact').value;
@@ -115,9 +115,20 @@ document.getElementById('submit').onclick = function(){
             Location:loc
         });
         checkInputs = () => {return true;}
-        form.action = "./dashboard.html";
-
+        sessionStorage.setItem('cname',cname);
+        const auth = firebase.auth();
+        const promise = auth.createUserWithEmailAndPassword(email,pass);
+        promise
+        .catch(e => console.log(e.message));
+        return;
     } else {
         checkInputs = () => {return false;}
     }
 }
+firebase.auth().onAuthStateChanged(firebaseUser=>{
+    if(firebaseUser){
+        console.log(firebaseUser);
+    } else{
+        console.log('not logged in');
+    }
+});
