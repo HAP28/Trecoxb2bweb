@@ -45,14 +45,15 @@ var auth = firebase.auth();
   function signout(){
     auth.signOut();
     alert("signed out");
+    window.location = '../sign.html';
   }
 
   auth.onAuthStateChanged(function(user){
       if(user){
           var email = user.email;
-          alert('Active user ' + email);
-      document.getElementById('form').action = './dashboard.html';
+          console.log('Active user ' + email);
       } else{
-          alert('No active use \nPlease login');
+          console.log('No active use \n Please login');
+          // window.location = '../sign.html';
       }
   });
