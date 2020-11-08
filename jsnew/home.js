@@ -21,7 +21,7 @@ var firebaseConfig = {
         document.title = company;
     } else{
         console.log('No active use \n Please login');
-        window.location = '../sign.html';
+        // window.location = './sign.html';
     }
   });
 
