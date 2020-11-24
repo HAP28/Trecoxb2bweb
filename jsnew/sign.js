@@ -48,12 +48,15 @@ var auth = firebase.auth();
     window.location = '../sign.html';
   }
 
-  auth.onAuthStateChanged(function(user){
-      if(user){
-          var email = user.email;
-          console.log('Active user ' + email);
-      } else{
-          console.log('No active use \n Please login');
-          // window.location = '../sign.html';
-      }
-  });
+  // auth.onAuthStateChanged(function(user){
+  //     if(user){
+  //         var email = user.email;
+  //         console.log('Active user ' + email);
+  //     } else{
+  //         console.log('No active use \n Please login');
+  //         // window.location = '../sign.html';
+  //     }
+  // });
+  function gotoDashboard(){
+    window.location = '../home.html';
+  }

@@ -277,13 +277,24 @@ main{
   display: flex;
   align-items: center;
 }
+#logo{
+  width: 50px;
+}
 .sidebar__title > div > img{
   width: 75px;
   object-fit: contain;
 }
 .sidebar__title > div > h1{
   font-size: 18px;
-  display: inline;
+  /* display: inline; */
+  margin-left: 5px;
+}
+.sidebar__title > div > a{
+  font-size: 8px;
+  /* display: inline-block; */
+  margin-left: 5px;
+  color: #f3f4f6;
+  text-decoration: none;
 }
 .sidebar__title > i{
   font-size: 18px;
