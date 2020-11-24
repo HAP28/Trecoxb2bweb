@@ -35,7 +35,7 @@
         document.getElementById('profile').src = company.photoURL;
     } else{
         console.log('No active use \n Please login');
-        // window.location = './sign.html';
+        window.location = './sign.html';
     }
   });
 
