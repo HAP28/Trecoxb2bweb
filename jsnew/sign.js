@@ -45,6 +45,7 @@ var auth = firebase.auth();
   function signout(){
     auth.signOut();
     alert("signed out");
+    localStorage.removeItem('user');
     window.location = '../sign.html';
   }
 
