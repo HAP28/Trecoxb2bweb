@@ -1,21 +1,32 @@
-// var firebaseConfig = {
-//     apiKey: "AIzaSyBtDws3qsD5G7za-yQZsdM7sw6pQac_B04",
-//     authDomain: "trecox-ed1bf.firebaseapp.com",
-//     databaseURL: "https://trecox-ed1bf.firebaseio.com",
-//     projectId: "trecox-ed1bf",
-//     storageBucket: "trecox-ed1bf.appspot.com",
-//     messagingSenderId: "1093903555653",
-//     appId: "1:1093903555653:web:98fc37108b75e08aa9d72c",
-//     measurementId: "G-7GCC8D01GL"
-//   };
-//   // Initialize Firebase
-//   firebase.initializeApp(firebaseConfig);
-//   firebase.analytics();
-
-  // var auth = firebase.auth();
 
   auth.onAuthStateChanged(function(user){
     if(user){
+
+      firebase.database().ref('users/').once('value').then(function(snapshot){
+        if(snapshot.hasChild(user.displayName)){
+          alert('already exist');
+        } else{
+          document.querySelector('.bg-modal').style.display = 'flex';
+          document.querySelector('.close').addEventListener('click',function(){
+          document.querySelector('.bg-modal').style.display = 'none';
+          });
+          
+          document.getElementById('profileFormSubmit').addEventListener('click',function(){
+            var category = document.getElementById('category').value;
+            var contact = document.getElementById('contact').value;
+            var location = document.getElementById('location').value;
+            firebase.database().ref('users/' + user.displayName).set({
+              displayName: user.displayName,
+              email: user.email,
+              category: category,
+              location: location,
+              contact: contact
+            });
+          });
+        }
+      });
+      
+
       var company = {
         displayName: user.displayName,
         email: user.email,
@@ -101,6 +112,12 @@ var chart = new ApexCharts(
 
 chart.render();
 
+function signout(){
+  auth.signOut();
+  alert("signed out");
+  localStorage.removeItem('user');
+  window.location = '../sign.html';
+}
 
 
 //sidebar toggle

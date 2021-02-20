@@ -12,4 +12,6 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+
   
+var auth = firebase.auth();

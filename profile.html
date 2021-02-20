@@ -11,15 +11,26 @@
         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/ui/4.7.1/firebase-ui-auth.js"></script>
+        <script src="./jsnew/index.js"></script>
         <script src="./jsnew/sign.js"></script>
 
 
     <script>
         initApp = function() {
+          
+        let childData = {};
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.
+            firebase.database().ref('users/'+ user.uid).on('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+              childData[childSnapshot.key] =  childSnapshot.val();
+              // childData.push(childSnapshot.val());
+            });
+          });
+          console.log(childData);
             var displayName = user.displayName;
             var email = user.email;
             var emailVerified = user.emailVerified;
@@ -28,19 +39,9 @@
             var phoneNumber = user.phoneNumber;
             var providerData = user.providerData;
             user.getIdToken().then(function(accessToken) {
-            //   var js = JSON.stringify({
-            //     displayName: displayName,
-            //     email: email,
-            //     emailVerified: emailVerified,
-            //     phoneNumber: phoneNumber,
-            //     photoURL: photoURL,
-            //     uid: uid,
-            //     accessToken: accessToken,
-            //     providerData: providerData
-            //   }, null, '  ');
               document.getElementById('name').innerHTML = displayName;
+              document.getElementById('contact').innerHTML = childData['contact'];
               document.getElementById('email').innerText = email;
-              document.getElementById('contact').innerHTML = phoneNumber;
               document.getElementById('profile').src = photoURL;
             });
           } else {
@@ -103,6 +104,14 @@
         </div>
     </div>
 
+<script>
+  function signout(){
+  auth.signOut();
+  alert("signed out");
+  localStorage.removeItem('user');
+  window.location = '../sign.html';
+}
+</script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
