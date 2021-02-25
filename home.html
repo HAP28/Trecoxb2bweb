@@ -24,9 +24,9 @@
                 <i class="fa fa-bars"></i>
             </div>
             <div class="navbar__left">
-                <a href="#">Customers</a>
-                <a href="./products.html">Product Management</a>
-                <a href="#" class="active_link">Dashboard</a>
+                <a id="customers" style="cursor:pointer; color:#a5aaad">Customers</a>
+                <a id="products" style="cursor:pointer; color:#a5aaad">Products</a>
+                <a id="dashboard" class="active_link" style="cursor:pointer; color:#a5aaad">Dashboard</a>
             </div>
             <div class="navbar__right">
                 <a href="#">
@@ -120,6 +120,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="product__container" style="display: none;">
+                <h1>Products</h1>
+            </div>
+            <div class="customer__container" style="display: none;">
+                <h1>Customer</h1>
             </div>
         </main>
 
@@ -220,7 +226,7 @@
         </div>
     </div>
 
-
+    <script src="./jsnew/jquery.js"></script>
     <script src="./jsnew/index.js"></script>
     <!-- <script src="./jsnew/sign.js"></script> -->
     <script src="./jsnew/home.js"></script>

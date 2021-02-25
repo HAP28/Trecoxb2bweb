@@ -1,4 +1,33 @@
 
+
+
+$('#products').click(() => {
+  $('.main__container').hide();
+  $('.product__container').show();
+  $('.customer__container').hide();
+  $('#products').addClass('active_link');
+  $('#dashboard').removeClass('active_link');
+  $('#customers').removeClass('active_link');
+});
+
+$('#dashboard').click(() => {
+  $('.main__container').show();
+  $('.product__container').hide();
+  $('.customer__container').hide();
+  $('#products').removeClass('active_link');
+  $('#customers').removeClass('active_link');
+  $('#dashboard').addClass('active_link');
+});
+
+$('#customers').click(() => {
+  $('.main__container').hide();
+  $('.product__container').hide();
+  $('.customer__container').show();
+  $('#customers').addClass('active_link');
+  $('#dashboard').removeClass('active_link');
+  $('#products').removeClass('active_link');
+});
+
   auth.onAuthStateChanged(function(user){
     if(user){
 

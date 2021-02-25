@@ -24,7 +24,7 @@ body{
     background-image: linear-gradient(to left,#002144,#46739f);
     color: #ffbe55;
   }
-  .heading{
+.heading{
     font-size: 20px;
   }
 .container-new{
@@ -90,7 +90,7 @@ body{
   font-weight: 700;
 }
 .navbar__left .active_link{
-  color: #265acc;
+  color: #265acc!important;
   border-bottom: 3px solid  #265acc;
   padding-bottom: 12px;
 }
