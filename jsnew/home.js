@@ -12,6 +12,7 @@
           });
           
           document.getElementById('profileFormSubmit').addEventListener('click',function(){
+            // console.log($(this).find(':selected').data('id'));
             var category = document.getElementById('category').value;
             var contact = document.getElementById('contact').value;
             var location = document.getElementById('location').value;

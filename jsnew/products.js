@@ -10,9 +10,17 @@ $(document).ready(function(){
           var phoneNumber = user.phoneNumber;
           var providerData = user.providerData;
           user.getIdToken().then(function(accessToken) {
-        
             $('#user').text(displayName);
           });
+          console.log(displayName);
+          firebase.database().ref('users/'+displayName).once('value').then(function(snapshot){
+            if(snapshot.hasChild('products')){
+              alert('product exist');
+            } else{
+              $('#category').text('Please add atleast one product');
+            }
+          });
+
         }
     }, function(error) {
         console.log(error);
