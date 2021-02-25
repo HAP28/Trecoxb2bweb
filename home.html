@@ -24,9 +24,9 @@
                 <i class="fa fa-bars"></i>
             </div>
             <div class="navbar__left">
-                <a id="customers" style="cursor:pointer; color:#a5aaad">Customers</a>
-                <a id="products" style="cursor:pointer; color:#a5aaad">Products</a>
-                <a id="dashboard" class="active_link" style="cursor:pointer; color:#a5aaad">Dashboard</a>
+                <a href="#customerDiv" id="customers" style="cursor:pointer; color:#a5aaad">Customers</a>
+                <a href="#productDiv" id="products" style="cursor:pointer; color:#a5aaad">Products</a>
+                <a href="#dashboardDiv" id="dashboard" class="active_link" style="cursor:pointer; color:#a5aaad">Dashboard</a>
             </div>
             <div class="navbar__right">
                 <a href="#">
@@ -42,7 +42,7 @@
         </nav>
 
         <main>
-            <div class="main__container">
+            <div class="main__container" id="dashboardDiv">
                 <div class="main__title">
                     <img src="./images/hello.svg" alt="welcome">
                     <div class="main__greeting">
@@ -121,11 +121,14 @@
                     </div>
                 </div>
             </div>
-            <div class="product__container" style="display: none;">
-                <h1>Products</h1>
+            <div class="product__container" id="productDiv" style="display: none;">
+                <h1 class="text-center mt-1">Products</h1>
+                <h1 id="product-user">hiiii</h1>
+                <h2 id="product-category">
+                </h2>
             </div>
-            <div class="customer__container" style="display: none;">
-                <h1>Customer</h1>
+            <div class="customer__container" id="customerDiv" style="display: none;">
+                <h1 class="text-center mt-1">Customer</h1>
             </div>
         </main>
 

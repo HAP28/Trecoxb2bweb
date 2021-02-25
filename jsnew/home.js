@@ -1,28 +1,25 @@
-
-
-
 $('#products').click(() => {
-  $('.main__container').hide();
-  $('.product__container').show();
-  $('.customer__container').hide();
+  $('#dashboardDiv').hide();
+  $('#productDiv').show();
+  $('#customerDiv').hide();
   $('#products').addClass('active_link');
   $('#dashboard').removeClass('active_link');
   $('#customers').removeClass('active_link');
 });
 
 $('#dashboard').click(() => {
-  $('.main__container').show();
-  $('.product__container').hide();
-  $('.customer__container').hide();
+  $('#dashboardDiv').show();
+  $('#productDiv').hide();
+  $('#customerDiv').hide();
   $('#products').removeClass('active_link');
   $('#customers').removeClass('active_link');
   $('#dashboard').addClass('active_link');
 });
 
 $('#customers').click(() => {
-  $('.main__container').hide();
-  $('.product__container').hide();
-  $('.customer__container').show();
+  $('#customerDiv').show();
+  $('#dashboardDiv').hide();
+  $('#productDiv').hide();
   $('#customers').addClass('active_link');
   $('#dashboard').removeClass('active_link');
   $('#products').removeClass('active_link');
@@ -30,10 +27,37 @@ $('#customers').click(() => {
 
   auth.onAuthStateChanged(function(user){
     if(user){
+      var company = {
+        displayName: user.displayName,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        phoneNumber: user.phoneNumber,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        accessToken: user.accessToken,
+        providerData: user.providerData
+      }
+
+
+      // user.getIdToken().then(function(accessToken) {
+        // $('#user').text(displayName);
+      // });
+      console.log(company.displayName);
+      
+      $('#product-user').text(company.displayName);
+      
+      firebase.database().ref('users/'+ company.displayName).once('value').then(function(snapshot){
+        if(snapshot.hasChild('products')){
+          alert('product exist');
+        } else{
+          $('#product-category').text('Please add atleast one product');
+        }
+      });
+
 
       firebase.database().ref('users/').once('value').then(function(snapshot){
         if(snapshot.hasChild(user.displayName)){
-          alert('already exist');
+          console.log('already exist');
         } else{
           document.querySelector('.bg-modal').style.display = 'flex';
           document.querySelector('.close').addEventListener('click',function(){
@@ -57,16 +81,7 @@ $('#customers').click(() => {
       });
       
 
-      var company = {
-        displayName: user.displayName,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        phoneNumber: user.phoneNumber,
-        photoURL: user.photoURL,
-        uid: user.uid,
-        accessToken: user.accessToken,
-        providerData: user.providerData
-      }
+
 
         console.log('Active user ' + company.displayName);
         document.title = company.displayName;
@@ -74,6 +89,7 @@ $('#customers').click(() => {
         document.getElementById('cmp_name').innerHTML = company.displayName;
         document.getElementById('logo').src = company.photoURL;
         document.getElementById('profile').src = company.photoURL;
+
     } else{
         console.log('No active use \n Please login');
         window.location = './sign.html';
