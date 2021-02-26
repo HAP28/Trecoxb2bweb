@@ -1,3 +1,17 @@
+function removeTopBarClass(){
+	$('#customers').removeClass('active_link');
+	$('#dashboard').removeClass('active_link');
+	$('#products').removeClass('active_link');
+	$('#dashboardDiv').hide();
+	$('#productDiv').hide();
+	$('#customerDiv').hide();
+}
+function removeSideBarClass(){
+	$('#pro-man').hide();
+	$('#side-dashboard').removeClass('active_menu_link');
+	$('#side-pro-man').removeClass('active_menu_link');
+}
+
 $('#products').click(() => {
   $('#dashboardDiv').hide();
   $('#productDiv').show();
@@ -5,6 +19,7 @@ $('#products').click(() => {
   $('#products').addClass('active_link');
   $('#dashboard').removeClass('active_link');
   $('#customers').removeClass('active_link');
+  removeSideBarClass();
 });
 
 $('#dashboard').click(() => {
@@ -14,6 +29,8 @@ $('#dashboard').click(() => {
   $('#products').removeClass('active_link');
   $('#customers').removeClass('active_link');
   $('#dashboard').addClass('active_link');
+  removeSideBarClass();
+  $('#side-dashboard').addClass('active_menu_link');
 });
 
 $('#customers').click(() => {
@@ -23,7 +40,25 @@ $('#customers').click(() => {
   $('#customers').addClass('active_link');
   $('#dashboard').removeClass('active_link');
   $('#products').removeClass('active_link');
+  removeSideBarClass();
 });
+
+$('#side-pro-man').click(() => {
+  removeTopBarClass();
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#pro-man').show();
+  $('#side-pro-man').addClass('active_menu_link');
+});
+
+$('#side-dashboard').click(() => {
+  removeTopBarClass();
+  $('#side-dashboard').addClass('active_menu_link');
+  $('#dashboardDiv').show();
+  $('#dashboard').addClass('active_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#pro-man').hide();
+});
+
 
   auth.onAuthStateChanged(function(user){
     if(user){
@@ -55,7 +90,7 @@ $('#customers').click(() => {
         }
       });
       
-    //   $('#product-user').text(company.displayName);
+      $('#product-user').text(user.displayName);
       
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
         if(snapshot.hasChild('products')){

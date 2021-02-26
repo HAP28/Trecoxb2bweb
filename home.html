@@ -24,8 +24,8 @@
 </head>
 <body>
 
-    <!-- top-bar -->
     <div class="container-new">
+        <!-- top-bar -->
         <nav class="navbar">
             <div class="nav_icon" onclick="toggleSidebar()">
                 <i class="fa fa-bars"></i>
@@ -132,13 +132,19 @@
             <!-- product div -->
             <div class="product__container" id="productDiv" style="display: none;">
                 <h1 class="text-center mt-1 main-heading">Products</h1>
-                <!-- <h1 id="product-user">hiiii</h1>
+                <h1 id="product-user">hiiii</h1>
                 <h2 id="product-category">
-                </h2> -->
+                </h2>
             </div>
             <!-- customer div -->
             <div class="customer__container" id="customerDiv" style="display: none;">
                 <h1 class="text-center mt-1 main-heading">Customer</h1>
+            </div>
+
+            <!-- sidebar divs -->
+            <!-- product Management -->
+            <div class="product_management" id="pro-man" style="display: none;">
+                <h1>Product management works</h1>
             </div>
         </main>
 
@@ -157,7 +163,7 @@
                 <i class="fa fa-times" id="sidebarIcon" onclick="closeSidebar()"></i>
             </div>
             <div class="sidebar__menu">
-                <div class="sidebar_link active_menu_link">
+                <div class="sidebar_link active_menu_link" id="side-dashboard">
                     <i class="fa fa-home"></i>
                     <a href="#">Dashboard</a>
                 </div>
@@ -170,9 +176,9 @@
                     <i class="fa fa-building"></i>
                     <a href="#">Company Management</a>
                 </div>
-                <div class="sidebar_link">
+                <div class="sidebar_link" id="side-pro-man">
                     <i class="fa fa-wrench"></i>
-                    <a href="#">Employee Management</a>
+                    <a href="#pro-man">Product Management</a>
                 </div>
                 <div class="sidebar_link">
                     <i class="fa fa-archive"></i>
