@@ -404,7 +404,10 @@ main{
   transform: rotate(45deg);
   cursor: pointer;
 }
-
+.main-heading{
+  font-size: 1.5rem;
+  color: #002144;
+}
 
 
 

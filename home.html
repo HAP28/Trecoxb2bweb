@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My TrecoX</title>
-
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    
     <link rel="stylesheet" href="./css/fontawesome/css/all.css">
+    <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    
+    <!-- apex chart -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+    <!-- custom css -->
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
+
+    <!-- top-bar -->
     <div class="container-new">
         <nav class="navbar">
             <div class="nav_icon" onclick="toggleSidebar()">
@@ -42,6 +49,7 @@
         </nav>
 
         <main>
+            <!-- Dashboard Div  -->
             <div class="main__container" id="dashboardDiv">
                 <div class="main__title">
                     <img src="./images/hello.svg" alt="welcome">
@@ -121,16 +129,20 @@
                     </div>
                 </div>
             </div>
+            <!-- product div -->
             <div class="product__container" id="productDiv" style="display: none;">
-                <h1 class="text-center mt-1">Products</h1>
-                <h1 id="product-user">hiiii</h1>
+                <h1 class="text-center mt-1 main-heading">Products</h1>
+                <!-- <h1 id="product-user">hiiii</h1>
                 <h2 id="product-category">
-                </h2>
+                </h2> -->
             </div>
+            <!-- customer div -->
             <div class="customer__container" id="customerDiv" style="display: none;">
-                <h1 class="text-center mt-1">Customer</h1>
+                <h1 class="text-center mt-1 main-heading">Customer</h1>
             </div>
         </main>
+
+        <!-- slidebar -->
 
         <div id="sidebar">
             <div class="sidebar__title">
@@ -203,6 +215,7 @@
         </div>
     </div>
     
+    <!-- First time profile page -->
     <div class="bg-modal">
         <div class="modal-content">
             <div class="close">+</div>
@@ -229,13 +242,13 @@
         </div>
     </div>
 
+
+
+
+    <!-- scripts -->
     <script src="./jsnew/jquery.js"></script>
     <script src="./jsnew/index.js"></script>
-    <!-- <script src="./jsnew/sign.js"></script> -->
     <script src="./jsnew/home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
 </body>
 </html>

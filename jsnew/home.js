@@ -27,35 +27,10 @@ $('#customers').click(() => {
 
   auth.onAuthStateChanged(function(user){
     if(user){
-      var company = {
-        displayName: user.displayName,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        phoneNumber: user.phoneNumber,
-        photoURL: user.photoURL,
-        uid: user.uid,
-        accessToken: user.accessToken,
-        providerData: user.providerData
-      }
 
+      console.log(user.displayName);
 
-      // user.getIdToken().then(function(accessToken) {
-        // $('#user').text(displayName);
-      // });
-      console.log(company.displayName);
-      
-      $('#product-user').text(company.displayName);
-      
-      firebase.database().ref('users/'+ company.displayName).once('value').then(function(snapshot){
-        if(snapshot.hasChild('products')){
-          alert('product exist');
-        } else{
-          $('#product-category').text('Please add atleast one product');
-        }
-      });
-
-
-      firebase.database().ref('users/').once('value').then(function(snapshot){
+	  firebase.database().ref('users/').once('value').then(function(snapshot){
         if(snapshot.hasChild(user.displayName)){
           console.log('already exist');
         } else{
@@ -80,15 +55,22 @@ $('#customers').click(() => {
         }
       });
       
+    //   $('#product-user').text(company.displayName);
+      
+      firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
+        if(snapshot.hasChild('products')){
+          alert('product exist');
+        } else{
+          $('#product-category').text('Please add atleast one product');
+        }
+      });
 
-
-
-        console.log('Active user ' + company.displayName);
-        document.title = company.displayName;
-        document.getElementById('user').innerHTML = company.displayName;
-        document.getElementById('cmp_name').innerHTML = company.displayName;
-        document.getElementById('logo').src = company.photoURL;
-        document.getElementById('profile').src = company.photoURL;
+        console.log('Active user ' + user.displayName);
+        document.title = user.displayName;
+        document.getElementById('user').innerHTML = user.displayName;
+        document.getElementById('cmp_name').innerHTML = user.displayName;
+        document.getElementById('logo').src = user.photoURL;
+        document.getElementById('profile').src = user.photoURL;
 
     } else{
         console.log('No active use \n Please login');
@@ -158,6 +140,7 @@ var chart = new ApexCharts(
 
 chart.render();
 
+// logout button
 function signout(){
   auth.signOut();
   alert("signed out");
