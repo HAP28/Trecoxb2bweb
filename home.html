@@ -108,19 +108,34 @@
             </div>
             <!-- product mnagement -->
             <div class="main__container" id="pro-man" style="display: none;">
-                <h2 id="product-status"></h2>
-                <h4>Add Category</h4>
-                <p>To add new category you have to add atleast one product for the same category</p>
-                <label for="Name">Category Name:</label> <input type="text" id="catName" placeholder="category"> 
-                    <label for="Category">Select Category</label>
-                    <select name="category" id="subCategory">
+                <h2 id="product-status" class="text-danger"></h2>
+                <h4 class="text-primary">Add Category</h4>
+                <small class="text-secondary">To add new category you have to add atleast one product for the same category</small>
+                <div class="form-inline mt-3">
+                    <!-- <label for="Name" style="display: inline-block;">Category Name:</label>  -->
+                    <input type="text" class="form-control" id="catName" placeholder="Add Category" autocomplete="off"> 
+                    <h5 for="Category" class="text-center text-dark">Or</h5>
+                    <select name="category" class="form-control mt-3" id="subCategory">
                         <option selected>Select</option>
                     </select>
-                    <label for="Name">Product Name:</label> <input type="text" id="proName" placeholder="Product Name"> 
-                    <label for="Name">Price:</label> <input type="number" id="price" placeholder="Price"> 
-                    <label for="Name">Mrp:</label> <input type="number" id="mrp" placeholder="Product Name"> 
-                    <label for="Name">Description:</label> <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                    <button class="btn btn-primary" id="addCategory">Add</button>
+                </div>
+                    <div class="form-group">
+                        <label for="Name" class="text-dark">Product Name:</label> 
+                        <input type="text" class="form-control" id="proName" placeholder="Product Name" autocomplete="off"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" class="text-dark">Price:</label> 
+                        <input type="number" class="form-control" id="price" placeholder="Price"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" class="text-dark">Mrp:</label> 
+                        <input type="number" class="form-control" id="mrp" placeholder="MRP"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" class="text-dark">Description</label> 
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-primary mt-3" id="addCategory">Add</button>
             </div>
             <!-- Customer mnagement -->
             <div class="main__container" id="cus-man" style="display: none;">
