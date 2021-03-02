@@ -25,29 +25,6 @@
 <body>
 
     <div class="container-new">
-        <!-- top-bar -->
-        <nav class="navbar">
-            <div class="nav_icon" onclick="toggleSidebar()">
-                <i class="fa fa-bars"></i>
-            </div>
-            <div class="navbar__left">
-                <a href="#customerDiv" id="customers" style="cursor:pointer; color:#a5aaad">Customers</a>
-                <a href="#productDiv" id="products" style="cursor:pointer; color:#a5aaad">Products</a>
-                <a href="#dashboardDiv" id="dashboard" class="active_link" style="cursor:pointer; color:#a5aaad">Dashboard</a>
-            </div>
-            <div class="navbar__right">
-                <a href="#">
-                    <i class="fa fa-search"></i>
-                </a>
-                <a href="#">
-                    <i class="fa fa-clock-o"></i>
-                </a>
-                <a href="#">
-                    <img width="30" src="./images/avatar.svg" id="profile" alt="profile">
-                </a>
-            </div>
-        </nav>
-
         <main>
             <!-- Dashboard Div  -->
             <div class="main__container" id="dashboardDiv">
@@ -129,22 +106,25 @@
                     </div>
                 </div>
             </div>
-            <!-- product div -->
-            <div class="product__container" id="productDiv" style="display: none;">
-                <h1 class="text-center mt-1 main-heading">Products</h1>
-                <h1 id="product-user">hiiii</h1>
-                <h2 id="product-category">
-                </h2>
+            <!-- product mnagement -->
+            <div class="main__container" id="pro-man" style="display: none;">
+                <h2 id="product-status"></h2>
+                <h4>Add Category</h4>
+                <p>To add new category you have to add atleast one product for the same category</p>
+                <label for="Name">Category Name:</label> <input type="text" id="catName" placeholder="category"> 
+                    <label for="Category">Select Category</label>
+                    <select name="category" id="subCategory">
+                        <option selected>Select</option>
+                    </select>
+                    <label for="Name">Product Name:</label> <input type="text" id="proName" placeholder="Product Name"> 
+                    <label for="Name">Price:</label> <input type="number" id="price" placeholder="Price"> 
+                    <label for="Name">Mrp:</label> <input type="number" id="mrp" placeholder="Product Name"> 
+                    <label for="Name">Description:</label> <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                    <button class="btn btn-primary" id="addCategory">Add</button>
             </div>
-            <!-- customer div -->
-            <div class="customer__container" id="customerDiv" style="display: none;">
-                <h1 class="text-center mt-1 main-heading">Customer</h1>
-            </div>
-
-            <!-- sidebar divs -->
-            <!-- product Management -->
-            <div class="product_management" id="pro-man" style="display: none;">
-                <h1>Product management works</h1>
+            <!-- Customer mnagement -->
+            <div class="main__container" id="cus-man" style="display: none;">
+                <p>customer</p>
             </div>
         </main>
 
@@ -168,7 +148,7 @@
                     <a href="#">Dashboard</a>
                 </div>
                 <h2>MNG</h2>
-                <div class="sidebar_link">
+                <div class="sidebar_link" id="side-cus-man">
                     <i class="fa fa-user-secret"></i>
                     <a href="#">Customer Management</a>
                 </div>
