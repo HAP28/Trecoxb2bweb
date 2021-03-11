@@ -1,13 +1,51 @@
-function removeSideBarClass(){
-	$('#pro-man').hide();
-	$('#side-dashboard').removeClass('active_menu_link');
-	$('#side-pro-man').removeClass('active_menu_link');
+function createDiv(product){
+  for(var i in product){
+    console.log(product[i].description);
+    var d=document.createElement("div");
+    var d1=document.createElement("div");
+    var d2=document.createElement("div");
+    var d3=document.createElement("div");
+    var d4=document.createElement("div");
+    var h5=document.createElement("h5");
+    var p1=document.createElement("p");
+    var p2=document.createElement("p");
+    var small = document.createElement('small');
+    var img=document.createElement("img");
+    d.className = 'card my-3';
+    d1.className = 'row no-gutters';
+    d2.className = 'col-md-4';
+    d3.className = 'col-md-8';
+    d4.className = 'card-body';
+    h5.className = 'card-title'
+    p1.className = 'card-text'
+    p2.className = 'card-text'
+    small.className = 'text-muted'
+    img.className = 'card-img';
+    document.getElementById('products').appendChild(d);
+    d.appendChild(d1)
+    d1.appendChild(d2)
+    d2.appendChild(img)
+    d1.appendChild(d3)
+    d3.appendChild(d4)
+    d4.appendChild(h5)
+    d4.appendChild(p1)
+    d4.appendChild(p2)
+    p2.appendChild(small)
+    d.style.maxWidth = '1040px';
+    d.style.height = 'auto';
+    img.src = "./images/about.png"
+    h5.textContent = product[i].productName
+    p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price
+    small.textContent = product[i].description
+  }
 }
 
 $('#side-dashboard').click(() => {
   $('#side-dashboard').addClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
+  $('#products').hide();
+  $('#side-products').removeClass('active_menu_link');
   $('#dashboardDiv').show();
   $('#pro-man').hide();
   $('#cus-man').hide();
@@ -17,6 +55,8 @@ $('#side-pro-man').click(() => {
   $('#pro-man').show();
   $('#dashboardDiv').hide();
   $('#cus-man').hide();
+  $('#products').hide();
+  $('#side-products').removeClass('active_menu_link');
   $('#side-pro-man').addClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
@@ -26,10 +66,28 @@ $('#side-cus-man').click(() => {
   $('#pro-man').hide();
   $('#dashboardDiv').hide();
   $('#cus-man').show();
+  $('#products').hide();
+  $('#side-products').removeClass('active_menu_link');
   $('#side-cus-man').addClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
 });
+
+$('#side-products').click(() => {
+  for (let index = 0; index < 3; index++) {
+  createDiv()
+  }
+    
+  $('#pro-man').hide();
+  $('#dashboardDiv').hide();
+  $('#cus-man').hide();
+  $('#products').show();
+  $('#side-products').addClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+});
+
 $('#addCategory').click(() =>{
   if(($('#subCategory').val() == 'Select' && $('#catName').val() == '') || ($('#subCategory').val() != 'Select' && $('#catName').val() != '')){
     alert('select or add new category');
@@ -100,12 +158,26 @@ $('#addCategory').click(() =>{
             Object.keys(snapshot.val()).forEach(element => {
               $('#subCategory').append(new Option(element, element));              
             });
+            var products = snapshot.val();
+            var product = []
+            console.log(products);
+            for(var pro in products){
+              var obj = products[pro];
+              for(var x in obj){
+                console.log(x);
+                product.push(obj[x]);
+              }
+            }
+            console.log(product);
+            // for(productObj in product){
+            //   createDiv(product[productObj]);
+            // }
+            createDiv(product)
           });
         } else{
           $('#product-status').text('Add Your First Category of Product.');
         }
       });
-
 
 
         console.log('Active user ' + user.displayName);
