@@ -1,6 +1,8 @@
+var product = []
+var products;
 function createDiv(product){
   for(var i in product){
-    console.log(product[i].description);
+    // console.log(product[i].description);
     var d=document.createElement("div");
     var d1=document.createElement("div");
     var d2=document.createElement("div");
@@ -21,7 +23,7 @@ function createDiv(product){
     p2.className = 'card-text'
     small.className = 'text-muted'
     img.className = 'card-img';
-    document.getElementById('products').appendChild(d);
+    document.getElementById('productpg').appendChild(d);
     d.appendChild(d1)
     d1.appendChild(d2)
     d2.appendChild(img)
@@ -119,6 +121,7 @@ $('#addCategory').click(() =>{
       console.log(user.displayName);
       localStorage.setItem('user',user.displayName);
 
+      // checck for the first time form
 	  firebase.database().ref('users/').once('value').then(function(snapshot){
         if(snapshot.hasChild(user.displayName)){
           console.log('already exist');
@@ -146,6 +149,7 @@ $('#addCategory').click(() =>{
       
       $('#product-user').text(user.displayName);
       
+      // product management & products code
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
         if(snapshot.hasChild('subCategory')){
           firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
@@ -158,27 +162,55 @@ $('#addCategory').click(() =>{
             Object.keys(snapshot.val()).forEach(element => {
               $('#subCategory').append(new Option(element, element));              
             });
-            var products = snapshot.val();
-            var product = []
+            products = snapshot.val();
             console.log(products);
             for(var pro in products){
               var obj = products[pro];
               for(var x in obj){
-                console.log(x);
                 product.push(obj[x]);
               }
             }
             console.log(product);
-            // for(productObj in product){
-            //   createDiv(product[productObj]);
-            // }
-            createDiv(product)
+            if($('#subCategorySort').val() == 'All'){
+              createDiv(product)
+            }
           });
         } else{
           $('#product-status').text('Add Your First Category of Product.');
         }
       });
 
+      //products sorting code
+      firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
+        if(snapshot.hasChild('subCategory')){
+          firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
+            $('#subCategorySort')
+            .find('option')
+            .remove()
+            .end()
+            $('#subCategorySort').append(new Option('All', 'All'));              
+            console.log(Object.keys(snapshot.val()));
+            Object.keys(snapshot.val()).forEach(element => {
+              $('#subCategorySort').append(new Option(element, element));              
+            });
+          });
+        }
+      });
+
+      $('#subCategorySort').on('change', function() {
+        for(var e in products){
+          if(e == this.value){
+            $('#productpg').html('');
+            console.log(products[e]);
+            createDiv(products[e])
+          }
+        }
+        if($('#subCategorySort').val() == 'All'){
+          $('#productpg').html('');
+          createDiv(product)
+        }
+        // alert( this.value );
+      });
 
         console.log('Active user ' + user.displayName);
         document.title = user.displayName;
