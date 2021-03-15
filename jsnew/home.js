@@ -1,6 +1,7 @@
 var product = []
 var products;
 function createDiv(product){
+  // $('#productpg').html('');
   for(var i in product){
     // console.log(product[i].description);
     var d=document.createElement("div");
@@ -164,6 +165,7 @@ $('#addCategory').click(() =>{
             });
             products = snapshot.val();
             console.log(products);
+            product = []
             for(var pro in products){
               var obj = products[pro];
               for(var x in obj){
@@ -172,6 +174,7 @@ $('#addCategory').click(() =>{
             }
             console.log(product);
             if($('#subCategorySort').val() == 'All'){
+              $('#productpg').html('');
               createDiv(product)
             }
           });
