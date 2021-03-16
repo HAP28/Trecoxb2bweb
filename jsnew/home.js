@@ -107,6 +107,7 @@ $('#addCategory').click(() =>{
       mrp: $('#mrp').val(),
       description: $('#description').val()
     });
+    window.location.reload();
     alert('product added');
     $('#proName').val('');
     $('#price').val('');
@@ -122,34 +123,11 @@ $('#addCategory').click(() =>{
       console.log(user.displayName);
       localStorage.setItem('user',user.displayName);
 
-      // checck for the first time form
+      // check for the first time form
 	  firebase.database().ref('users/').once('value').then(function(snapshot){
         if(snapshot.hasChild(user.displayName)){
           console.log('already exist');
-        } else{
-          document.querySelector('.bg-modal').style.display = 'flex';
-          document.querySelector('.close').addEventListener('click',function(){
-          document.querySelector('.bg-modal').style.display = 'none';
-          });
-          
-          document.getElementById('profileFormSubmit').addEventListener('click',function(){
-            // console.log($(this).find(':selected').data('id'));
-            var category = document.getElementById('category').value;
-            var contact = document.getElementById('contact').value;
-            var location = document.getElementById('location').value;
-            firebase.database().ref('users/' + user.displayName).set({
-              displayName: user.displayName,
-              email: user.email,
-              category: category,
-              location: location,
-              contact: contact
-            });
-          });
-        }
-      });
-      
-      $('#product-user').text(user.displayName);
-      
+
       // product management & products code
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
         if(snapshot.hasChild('subCategory')){
@@ -214,6 +192,101 @@ $('#addCategory').click(() =>{
         }
         // alert( this.value );
       });
+
+
+
+
+
+
+        } else{
+          document.querySelector('.bg-modal').style.display = 'flex';
+          document.querySelector('.close').addEventListener('click',function(){
+          document.querySelector('.bg-modal').style.display = 'none';
+          });
+          
+          document.getElementById('profileFormSubmit').addEventListener('click',function(){
+            // console.log($(this).find(':selected').data('id'));
+            var category = document.getElementById('category').value;
+            var contact = document.getElementById('contact').value;
+            var location = document.getElementById('location').value;
+            firebase.database().ref('users/' + user.displayName).set({
+              displayName: user.displayName,
+              email: user.email,
+              category: category,
+              location: location,
+              contact: contact
+            });
+          document.querySelector('.bg-modal').style.display = 'none';
+          });
+        }
+      });
+           
+      $('#product-user').text(user.displayName);
+      
+      // // product management & products code
+      // firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
+      //   if(snapshot.hasChild('subCategory')){
+      //     firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
+      //       $('#subCategory')
+      //       .find('option')
+      //       .remove()
+      //       .end()
+      //       $('#subCategory').append(new Option('Select', 'Select'));              
+      //       console.log(Object.keys(snapshot.val()));
+      //       Object.keys(snapshot.val()).forEach(element => {
+      //         $('#subCategory').append(new Option(element, element));              
+      //       });
+      //       products = snapshot.val();
+      //       console.log(products);
+      //       product = []
+      //       for(var pro in products){
+      //         var obj = products[pro];
+      //         for(var x in obj){
+      //           product.push(obj[x]);
+      //         }
+      //       }
+      //       console.log(product);
+      //       if($('#subCategorySort').val() == 'All'){
+      //         $('#productpg').html('');
+      //         createDiv(product)
+      //       }
+      //     });
+      //   } else{
+      //     $('#product-status').text('Add Your First Category of Product.');
+      //   }
+      // });
+
+      // //products sorting code
+      // firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
+      //   if(snapshot.hasChild('subCategory')){
+      //     firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
+      //       $('#subCategorySort')
+      //       .find('option')
+      //       .remove()
+      //       .end()
+      //       $('#subCategorySort').append(new Option('All', 'All'));              
+      //       console.log(Object.keys(snapshot.val()));
+      //       Object.keys(snapshot.val()).forEach(element => {
+      //         $('#subCategorySort').append(new Option(element, element));              
+      //       });
+      //     });
+      //   }
+      // });
+
+      // $('#subCategorySort').on('change', function() {
+      //   for(var e in products){
+      //     if(e == this.value){
+      //       $('#productpg').html('');
+      //       console.log(products[e]);
+      //       createDiv(products[e])
+      //     }
+      //   }
+      //   if($('#subCategorySort').val() == 'All'){
+      //     $('#productpg').html('');
+      //     createDiv(product)
+      //   }
+      //   // alert( this.value );
+      // });
 
         console.log('Active user ' + user.displayName);
         document.title = user.displayName;
