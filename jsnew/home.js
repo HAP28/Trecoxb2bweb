@@ -1,7 +1,39 @@
+var ih;
+if(window.location.href.includes('#pro-man')){
+  $('#pro-man').show();
+  $('#dashboardDiv').hide();
+  $('#cus-man').hide();
+  $('#products').hide();
+  $('#side-products').removeClass('active_menu_link');
+  $('#side-pro-man').addClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+}
+if(window.location.href.includes('#products')){
+  $('#pro-man').hide();
+  $('#dashboardDiv').hide();
+  $('#cus-man').hide();
+  $('#products').show();
+  $('#side-products').addClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+}
+if(window.location.href.includes('#dashboardDiv')){
+  $('#pro-man').hide();
+  $('#dashboardDiv').show();
+  $('#cus-man').hide();
+  $('#products').hide();
+  $('#side-products').removeClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-dashboard').addClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+}
 var product = []
 var products;
 function createDiv(product){
-  // $('#productpg').html('');
+  console.log(product.length);
+  $('#numOfProducts').text(product.length);
   for(var i in product){
     // console.log(product[i].description);
     var d=document.createElement("div");
@@ -36,7 +68,7 @@ function createDiv(product){
     p2.appendChild(small)
     d.style.maxWidth = '1040px';
     d.style.height = 'auto';
-    img.src = "./images/about.png"
+    img.src = product[i].imgUrl;
     h5.textContent = product[i].productName
     p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price
     small.textContent = product[i].description
@@ -77,10 +109,6 @@ $('#side-cus-man').click(() => {
 });
 
 $('#side-products').click(() => {
-  for (let index = 0; index < 3; index++) {
-  createDiv()
-  }
-    
   $('#pro-man').hide();
   $('#dashboardDiv').hide();
   $('#cus-man').hide();
@@ -101,20 +129,40 @@ $('#addCategory').click(() =>{
     } else{
       var category = $('#subCategory').val();
     }
-    firebase.database().ref('users/'+ localStorage.getItem('user') + '/subCategory/' + category + '/' + $('#proName').val()).set({
-      productName: $('#proName').val(),
-      price: $('#price').val(),
-      mrp: $('#mrp').val(),
-      description: $('#description').val()
+    ImgName = $('#proName').val();
+    Price = $('#price').val();
+    Mrp = $('#mrp').val();
+    Description = $('#description').val();
+    var uploadTask = firebase.storage().ref('Images/'+ ImgName).put(files[0]);
+    uploadTask.on('state_changed',function(snapshot) {
+      snapshot.ref.getDownloadURL().then(function(url){
+        console.log(url);
+        ih = url;
+        console.log(ih);
+        
+        firebase.database().ref('users/'+ localStorage.getItem('user') + '/subCategory/' + category + '/' + ImgName).set({
+          productName: ImgName,
+          price: Price,
+          mrp: Mrp,
+          description: Description,
+          imgUrl: ih
+        });
+      });
+    },
+    function(err) {
+      console.log(err);
     });
-    window.location.reload();
-    alert('product added');
+// alert('product added');
+//     window.location.reload();
+//     window.location.href = './home.html#pro-man'
     $('#proName').val('');
     $('#price').val('');
     $('#mrp').val('');
     $('#description').val('');
     $('#catName').val('');
     $('#subCategory').val('Select');
+    document.getElementById('myimg').src = '';
+    localStorage.removeItem('url');
   }
 });
   auth.onAuthStateChanged(function(user){
@@ -194,10 +242,6 @@ $('#addCategory').click(() =>{
       });
 
 
-
-
-
-
         } else{
           document.querySelector('.bg-modal').style.display = 'flex';
           document.querySelector('.close').addEventListener('click',function(){
@@ -222,6 +266,7 @@ $('#addCategory').click(() =>{
       });
            
       $('#product-user').text(user.displayName);
+
       
       // // product management & products code
       // firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){

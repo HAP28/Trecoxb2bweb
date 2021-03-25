@@ -10,11 +10,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     
     <!-- firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script> 
     
     <!-- apex chart -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -39,8 +41,8 @@
                     <div class="card">
                         <i class="fa fa-user fa-2x text-lightblue"></i>
                         <div class="card__inner">
-                            <p class="text-primary-p">Number of Subscribers</p>
-                            <span class="font-bold text-title">534</span>
+                            <p class="text-primary-p">Number of Products</p>
+                            <span class="font-bold text-title" id="numOfProducts"></span>
                         </div>
                     </div>
                     <div class="card">
@@ -111,26 +113,36 @@
                 <h2 id="product-status" class="text-danger"></h2>
                 <h4 class="text-primary">Add Category</h4>
                 <small class="text-secondary">To add new category you have to add atleast one product for the same category</small>
-                <div class="form-inline mt-3">
-                    <!-- <label for="Name" style="display: inline-block;">Category Name:</label>  -->
-                    <input type="text" class="form-control" id="catName" placeholder="Add Category" autocomplete="off"> 
-                    <h5 for="Category" class="text-center text-dark">Or</h5>
-                    <select name="category" class="form-control mt-3" id="subCategory">
+                <div class="form-inline mt-1">
+                    <input type="text" class="form-control" id="catName" placeholder="Add Category" autocomplete="off" style="display: inline-block; width: 200px;"> 
+                    <h5 for="Category" class="text-center text-dark mx-3" style="display: inline-block;">Or</h5>
+                    <select name="category" class="form-control mt-3" id="subCategory" style="display: inline-block; width: 200px;">
                         <option selected>Select</option>
                     </select>
                 </div>
-                    <div class="form-group">
-                        <label for="Name" class="text-dark">Product Name:</label> 
-                        <input type="text" class="form-control" id="proName" placeholder="Product Name" autocomplete="off"> 
+                <div class="outer" style="display: flex;">
+                    <div class="input">
+                        <div class="form-group mt-1">
+                            <label for="Name" class="text-dark">Product Name:</label> 
+                            <input type="text" class="form-control" id="proName" placeholder="Product Name" autocomplete="off" style="width: 500px;"> 
+                        </div>
+                            <div class="form-group">
+                                <label for="Name" class="text-dark">Price:</label> 
+                                <input type="number" class="form-control" id="price" placeholder="Price" style="width: 500px;"> 
+                            </div>
+                            <div class="form-group">
+                                <label for="Name" class="text-dark">Mrp:</label> 
+                                <input type="number" class="form-control" id="mrp" placeholder="MRP" style="width: 500px;"> 
+                            </div>
+                        <div class="form-group mt-1">
+                            <label for="Name" class="text-dark">Select Image:</label> 
+                            <input type="file" class="form-control" id="image" autocomplete="off" style="width: 500px;"> 
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Name" class="text-dark">Price:</label> 
-                        <input type="number" class="form-control" id="price" placeholder="Price"> 
+                    <div class="img" style="float: right;">
+                        <img class="img-fluid mx-5" style="width: 250px; height: 250px; border: 2px solid black; float: right;" id="myimg" alt="">
                     </div>
-                    <div class="form-group">
-                        <label for="Name" class="text-dark">Mrp:</label> 
-                        <input type="number" class="form-control" id="mrp" placeholder="MRP"> 
-                    </div>
+                </div>
                     <div class="form-group">
                         <label for="Name" class="text-dark">Description</label> 
                         <textarea name="description" class="form-control" id="description" cols="30" rows="5"></textarea>
@@ -147,20 +159,6 @@
                     <option selected>Select</option>
                 </select>
                 <a href="" id="productpg" style="text-decoration: none;"></a>
-                <!-- <div class="card" style="max-width: 1040px; height: auto;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <img src="./images/about.png" class="card-img" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                      </div>
-                    </div>
-                </div> -->
             </div>
             
         </main>
@@ -182,7 +180,7 @@
             <div class="sidebar__menu">
                 <div class="sidebar_link active_menu_link" id="side-dashboard">
                     <i class="fa fa-home"></i>
-                    <a href="#">Dashboard</a>
+                    <a href="#dashboardDiv">Dashboard</a>
                 </div>
                 <h2>MNG</h2>
                 <div class="sidebar_link" id="side-cus-man">
@@ -199,7 +197,7 @@
                 </div>
                 <div class="sidebar_link" id="side-products">
                     <i class="fa fa-archive"></i>
-                    <a href="#">Products</a>
+                    <a href="#products">Products</a>
                 </div>
                 <div class="sidebar_link">
                     <i class="fa fa-handshake-o"></i>
@@ -269,9 +267,23 @@
 
 
     <!-- scripts -->
+    <script>
+        var ImgName, ImgUrl;
+        var files = [];
+        var reader;
+        document.getElementById('image').onchange = e => {
+            files = e.target.files;
+            reader =new FileReader();
+            reader.onload = function(){
+                document.getElementById('myimg').src = reader.result;
+            }
+            reader.readAsDataURL(files[0]);
+        }
+    </script>
     <script src="./jsnew/jquery.js"></script>
     <script src="./jsnew/index.js"></script>
     <script src="./jsnew/home.js"></script>
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 </html>
