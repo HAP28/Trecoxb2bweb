@@ -69,6 +69,8 @@ function createDiv(product){
     d.style.maxWidth = '1040px';
     d.style.height = 'auto';
     img.src = product[i].imgUrl;
+	img.style.width= '250px';
+	img.style.height= '250px';
     h5.textContent = product[i].productName
     p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price
     small.textContent = product[i].description
@@ -134,8 +136,16 @@ $('#addCategory').click(() =>{
     Mrp = $('#mrp').val();
     Description = $('#description').val();
     var uploadTask = firebase.storage().ref('Images/'+ ImgName).put(files[0]);
-    uploadTask.on('state_changed',function(snapshot) {
-      snapshot.ref.getDownloadURL().then(function(url){
+    
+	uploadTask.on('state_changed',function(snapshot) {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      document.getElementById('upProgress').style.width =  progress + "%";
+    },
+    function(err) {
+      console.log(err);
+    },
+    function(){
+      uploadTask.snapshot.ref.getDownloadURL().then(function(url){
         console.log(url);
         ih = url;
         console.log(ih);
@@ -147,24 +157,23 @@ $('#addCategory').click(() =>{
           description: Description,
           imgUrl: ih
         });
+        alert('product added');
+		window.location.reload();
+		window.location.href = './home.html#pro-man'
+		$('#proName').val('');
+		$('#price').val('');
+		$('#mrp').val('');
+		$('#description').val('');
+		$('#catName').val('');
+		$('#subCategory').val('Select');
+		document.getElementById('myimg').src = null;
+		localStorage.removeItem('url');
       });
-    },
-    function(err) {
-      console.log(err);
     });
-// alert('product added');
-//     window.location.reload();
-//     window.location.href = './home.html#pro-man'
-    $('#proName').val('');
-    $('#price').val('');
-    $('#mrp').val('');
-    $('#description').val('');
-    $('#catName').val('');
-    $('#subCategory').val('Select');
-    document.getElementById('myimg').src = '';
-    localStorage.removeItem('url');
+ 
   }
 });
+
   auth.onAuthStateChanged(function(user){
     if(user){
 
