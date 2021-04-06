@@ -139,7 +139,7 @@ main{
 }
 .main__cards{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0fr;
   gap: 30px;
   margin: 20px 0;
 }
@@ -147,7 +147,7 @@ main{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 100px;
+  height: 140px;
   padding: 25px;
   background-color: #ffffff;
   box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #ffffff;
@@ -281,8 +281,13 @@ main{
   display: flex;
   align-items: center;
 }
+#logo_main{
+  width: 80px;
+  height: 80px;
+}
 #logo{
   width: 50px;
+  height: 50px;
 }
 .sidebar__title > div > img{
   width: 75px;

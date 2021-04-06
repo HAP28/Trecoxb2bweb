@@ -48,22 +48,15 @@
                     <div class="card">
                         <i class="fa fa-thumbs-up fa-2x text-green"></i>
                         <div class="card__inner">
-                            <p class="text-primary-p">Number of Likes</p>
+                            <p class="text-primary-p">Number of Connections</p>
                             <span class="font-bold text-title">1348</span>
                         </div>
                     </div>
                     <div class="card">
                         <i class="fa fa-calendar fa-2x text-red"></i>
                         <div class="card__inner">
-                            <p class="text-primary-p">Times of Watching</p>
+                            <p class="text-primary-p">Number of Orders</p>
                             <span class="font-bold text-title">5342</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <i class="fa fa-video-camera fa-2x text-yellow"></i>
-                        <div class="card__inner">
-                            <p class="text-primary-p">Number of videos</p>
-                            <span class="font-bold text-title">340</span>
                         </div>
                     </div>
                 </div>
@@ -155,8 +148,9 @@
             </div>
             <!-- Customer mnagement -->
             <div class="main__container" id="cus-man" style="display: none;">
-                <p>customer</p>
+                <img id="customerImage" alt="image" height="200px" width="200px">
             </div>
+            <!-- Products -->
             <div class="main__container" id="products" style="display: none;">
                 <p class="text-primary">Sort by:</p> 
                 <select name="category" class="form-control mt-3" id="subCategorySort">
@@ -190,6 +184,7 @@
                 <div class="sidebar_link" id="side-cus-man">
                     <i class="fa fa-user-secret"></i>
                     <a href="#cust">Customer Management</a>
+                    <span id="notification" style="border-radius: 50%; width: 20px; height: 20px; background-color: red; position: absolute; left: 250px; padding-left: 5px;">0</span>
                 </div>
                 <div class="sidebar_link">
                     <i class="fa fa-building"></i>
@@ -216,22 +211,23 @@
         <div class="modal-content">
             <div class="close">+</div>
             <h2 class="modal-header">Create your profile first!!</h2>
-            <img src="./images/logo (2).png" id="logo" alt="logo">
+            <img src="./images/logo (2).png" id="logo_main" alt="logo">
+            <input type="file" class="form-control" id="logo_select" autocomplete="off" placeholder="Select Logo" required>
             <form class="profile-form">
                 <label for="exampleInputPassword1">Category:  </label>
-                <select class="custom-select my-3 mr-sm-2" id="category">
-                    <option selected>Choose...</option>
+                <select class="custom-select my-3 mr-sm-2" id="category" required>
+                    <option selected value="0">Choose...</option>
                     <option value="One">One</option>
                     <option value="Two">Two</option>
                     <option value="Three">Three</option>
                   </select>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Contact No.</label>
-                  <input type="number" class="form-control my-3" id="contact" placeholder="Contact Number">
+                  <input type="number" class="form-control my-3" id="contact" placeholder="Contact Number" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Location</label>
-                    <input type="text" class="form-control my-3" id="location" placeholder="Location">
+                    <input type="text" class="form-control my-3" id="location" placeholder="Location" required>
                 </div>
                 <button type="submit" class="btn btn-primary my-3" id="profileFormSubmit">Submit</button>
             </form>
@@ -243,7 +239,9 @@
     <script>
         var ImgName, ImgUrl;
         var files = [];
-        var reader;
+        var filesLogo = [];
+        var reader,readerLogo;
+        var flag = 0;
         document.getElementById('image').onchange = e => {
             files = e.target.files;
             reader =new FileReader();
@@ -252,8 +250,41 @@
             }
             reader.readAsDataURL(files[0]);
         }
+        document.getElementById('logo_select').onchange = e => {
+            flag = 1;
+            filesLogo = e.target.files;
+            readerLogo =new FileReader();
+            readerLogo.onload = function(){
+                document.getElementById('logo_main').src = readerLogo.result;
+                document.getElementById('logo').src = readerLogo.result;
+            }
+            readerLogo.readAsDataURL(filesLogo[0]);
+            var user = localStorage.getItem('user');
+            var uploadTaskX = firebase.storage().ref('Logo/'+ user).put(filesLogo[0]);
+            uploadTaskX.on('state_changed',function(snapshot) {
+              var progressX = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              document.getElementById('upProgress').style.width =  progressX + "%";
+              console.log(progressX);
+            },
+            function(err) {
+              alert(err);
+            },
+            function(){
+                uploadTaskX.snapshot.ref.getDownloadURL().then(function(url){
+                console.log(url);
+                localStorage.setItem('url',url);
+                });
+            });
+        }
+
     </script>
     <script src="./jsnew/jquery.js"></script>
+    <script>
+        console.log(document.getElementById('logo_main').src);
+        if(flag == 1){
+            $('#profileFormSubmit').prop('disabled',false);
+        }
+    </script>
     <script src="./jsnew/index.js"></script>
     <script src="./jsnew/home.js"></script>
  

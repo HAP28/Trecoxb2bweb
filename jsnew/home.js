@@ -1,4 +1,5 @@
-var ih;
+var ih,ihLogo;
+let count_notification = 0;
 if(window.location.href.includes('#pro-man')){
   $('#pro-man').show();
   $('#dashboardDiv').hide();
@@ -32,7 +33,6 @@ if(window.location.href.includes('#dashboardDiv')){
 var product = []
 var products;
 function createDiv(product){
-  console.log(product.length);
   $('#numOfProducts').text(product.length);
   for(var i in product){
     // console.log(product[i].description);
@@ -46,6 +46,9 @@ function createDiv(product){
     var p2=document.createElement("p");
     var small = document.createElement('small');
     var img=document.createElement("img");
+	var btnDelete = document.createElement("button");
+	btnDelete.textContent = 'Delete';
+	btnDelete.className = 'btn btn-danger';
     d.className = 'card my-3';
     d1.className = 'row no-gutters';
     d2.className = 'col-md-4';
@@ -62,6 +65,7 @@ function createDiv(product){
     d2.appendChild(img)
     d1.appendChild(d3)
     d3.appendChild(d4)
+    d3.appendChild(btnDelete)
     d4.appendChild(h5)
     d4.appendChild(p1)
     d4.appendChild(p2)
@@ -71,10 +75,18 @@ function createDiv(product){
     img.src = product[i].imgUrl;
 	img.style.width= '250px';
 	img.style.height= '250px';
-    h5.textContent = product[i].productName
-    p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price
-    small.textContent = product[i].description
+    h5.textContent = product[i].productName;
+    p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price;
+    small.textContent = product[i].description;
+	btnDelete.addEventListener('click',() => {
+		deleteProduct(i);
+		return false;
+	});
   }
+}
+function deleteProduct(x){
+	console.log(product[x]['description']);
+	return false;
 }
 
 $('#side-dashboard').click(() => {
@@ -187,6 +199,7 @@ $('#addCategory').click(() =>{
 
       // product management & products code
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
+        document.getElementById('logo').src = snapshot.val()['logoUrl'];
         if(snapshot.hasChild('subCategory')){
           firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
             $('#subCategory')
@@ -250,6 +263,46 @@ $('#addCategory').click(() =>{
         // alert( this.value );
       });
 
+      //wholesaler code
+      // firebase.database().ref('category_wholesalers/Stationery')
+      const storageRef = firebase.storage().ref();
+      var starsRef = storageRef.child('wholesaler_image/Hap');
+
+      // Get the download URL
+      starsRef.getDownloadURL()
+      .then((url) => {
+        document.getElementById('customerImage').src = url;
+        console.log(url);
+      })
+      .catch((error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/object-not-found':
+            // File doesn't exist
+            break;
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+          case 'storage/unknown':
+            // Unknown error occurred, inspect the server response
+            break;
+        }
+  });
+  // notification code
+      firebase.database().ref('connection_users/'+user.displayName).on("value",(snapshot) => {
+        count_notification = 0
+        snapshot.forEach(element => {
+          // console.log(element.val()['status']);  
+          if(element.val()['status'] === 'pending'){
+            count_notification++;
+          }          
+        });
+        $('#notification').text(count_notification);
+      })
 
         } else{
           document.querySelector('.bg-modal').style.display = 'flex';
@@ -258,7 +311,8 @@ $('#addCategory').click(() =>{
           });
           
           document.getElementById('profileFormSubmit').addEventListener('click',function(){
-            // console.log($(this).find(':selected').data('id'));
+            if(document.getElementById('contact').value != '' && document.getElementById('location').value != '' && document.getElementById('category').value != '0')
+            {
             var category = document.getElementById('category').value;
             var contact = document.getElementById('contact').value;
             var location = document.getElementById('location').value;
@@ -267,9 +321,12 @@ $('#addCategory').click(() =>{
               email: user.email,
               category: category,
               location: location,
-              contact: contact
+              contact: contact,
+              logoUrl: localStorage.getItem('url')
             });
+            document.getElementById('logo').src = localStorage.getItem('url');
           document.querySelector('.bg-modal').style.display = 'none';
+            }
           });
         }
       });
@@ -346,7 +403,7 @@ $('#addCategory').click(() =>{
         document.title = user.displayName;
         document.getElementById('user').innerHTML = user.displayName;
         document.getElementById('cmp_name').innerHTML = user.displayName;
-        document.getElementById('logo').src = user.photoURL;
+        // document.getElementById('logo').src = user.photoURL;
 
     } else{
         console.log('No active use \n Please login');
