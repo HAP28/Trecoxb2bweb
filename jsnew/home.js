@@ -136,7 +136,16 @@ $('#side-products').click(() => {
 $('#addCategory').click(() =>{
   if(($('#subCategory').val() == 'Select' && $('#catName').val() == '') || ($('#subCategory').val() != 'Select' && $('#catName').val() != '')){
     alert('select or add new category');
-  }else{
+  } else if($('#proName').val() == ''){
+  	alert('Product Name is mandatory');
+  } else if($('#price').val() == ''){
+	alert('Price is Required')
+  } else if($('#mrp').val() == ''){
+	alert('MRP is Required') 
+  } else if($('#myimg').src == 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRza72o_kVyvLgPaULsX2PaKTkoIlotyw52HQ&usqp=CAU'){
+  	alert('Select an image for the product')
+  }
+  else{
     if($('#subCategory').val() == 'Select')
     {
       var category = $('#catName').val();
@@ -302,6 +311,7 @@ $('#addCategory').click(() =>{
           }          
         });
         $('#notification').text(count_notification);
+        $('#notification_connection').text(count_notification);
       })
 
         } else{

@@ -49,7 +49,7 @@
                         <i class="fa fa-thumbs-up fa-2x text-green"></i>
                         <div class="card__inner">
                             <p class="text-primary-p">Number of Connections</p>
-                            <span class="font-bold text-title">1348</span>
+                            <span class="font-bold text-title" id="notification_connection"></span>
                         </div>
                     </div>
                     <div class="card">
@@ -217,9 +217,9 @@
                 <label for="exampleInputPassword1">Category:  </label>
                 <select class="custom-select my-3 mr-sm-2" id="category" required>
                     <option selected value="0">Choose...</option>
-                    <option value="One">One</option>
-                    <option value="Two">Two</option>
-                    <option value="Three">Three</option>
+                    <option value="Watch">Watch</option>
+                    <option value="Stationery">Stationery</option>
+                    <option value="General Store">General Store</option>
                   </select>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Contact No.</label>
@@ -229,7 +229,7 @@
                     <label for="exampleInputPassword1">Location</label>
                     <input type="text" class="form-control my-3" id="location" placeholder="Location" required>
                 </div>
-                <button type="submit" class="btn btn-primary my-3" id="profileFormSubmit">Submit</button>
+                <button type="submit" class="btn btn-primary my-3" id="profileFormSubmit">Submit</button> <p id="uploading"></p>
             </form>
         </div>
     </div>
@@ -263,8 +263,9 @@
             var uploadTaskX = firebase.storage().ref('Logo/'+ user).put(filesLogo[0]);
             uploadTaskX.on('state_changed',function(snapshot) {
               var progressX = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              document.getElementById('upProgress').style.width =  progressX + "%";
+              document.getElementById('uploading').innerHTML=  progressX + "%";
               console.log(progressX);
+              document.getElementById('profileFormSubmit').disabled = true
             },
             function(err) {
               alert(err);
@@ -274,6 +275,7 @@
                 console.log(url);
                 localStorage.setItem('url',url);
                 });
+                document.getElementById('profileFormSubmit').disabled = false
             });
         }
 

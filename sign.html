@@ -19,7 +19,7 @@
       auth.onAuthStateChanged(function(user){
         if(user){
           localStorage.setItem('user',user);
-            var ref = database().ref;
+            // var ref = firebase.database().ref;
             var email = user.email;
             console.log('Active user ' + email);
             window.location = './home.html';
@@ -27,9 +27,9 @@
             console.log('No active use \n Please login');
         }
       });
-      if(localStorage.getItem('user') != null){
-        window.location ='./home.html';
-      }
+      // if(localStorage.getItem('user') != null){
+      //   window.location ='./home.html';
+      // }
     </script>
     
     <script type="text/javascript">
