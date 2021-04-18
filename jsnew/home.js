@@ -1,41 +1,80 @@
 var ih,ihLogo;
-let count_notification = 0;
-if(window.location.href.includes('#pro-man')){
-  $('#pro-man').show();
+let count_notification_pending = 0,count_notification_accept=0;
+if(window.location.href.includes('#orders')){
+  // window.location.reload()
+  $('#orders').show();
+  $('#pro-man').hide();
   $('#dashboardDiv').hide();
   $('#cus-man').hide();
   $('#products').hide();
+  $('#side-order').removeClass('active_menu_link');
+  $('#side-products').removeClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+}
+if(window.location.href.includes('#pro-man')){
+  // window.location.reload()
+  $('#dashboardDiv').hide();
+  $('#orders').hide();
+  $('#cus-man').hide();
+  $('#products').hide();
+  $('#pro-man').show();
+  $('#side-order').removeClass('active_menu_link');
   $('#side-products').removeClass('active_menu_link');
   $('#side-pro-man').addClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
 }
 if(window.location.href.includes('#products')){
+  // window.location.reload()
   $('#pro-man').hide();
   $('#dashboardDiv').hide();
+  $('#orders').hide();
   $('#cus-man').hide();
   $('#products').show();
+  $('#side-order').removeClass('active_menu_link');
   $('#side-products').addClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
 }
 if(window.location.href.includes('#dashboardDiv')){
+  // window.location.reload()
   $('#pro-man').hide();
-  $('#dashboardDiv').show();
+  $('#orders').hide();
   $('#cus-man').hide();
   $('#products').hide();
+  $('#dashboardDiv').show();
+  $('#side-order').removeClass('active_menu_link');
   $('#side-products').removeClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
   $('#side-dashboard').addClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
 }
-var product = []
-var products;
-function createDiv(product){
-  $('#numOfProducts').text(product.length);
-  for(var i in product){
-    // console.log(product[i].description);
+if(window.location.href.includes('#cus-man')){
+  // window.location.reload()
+  $('#pro-man').hide();
+  $('#orders').hide();
+  $('#cus-man').show();
+  $('#products').hide();
+  $('#dashboardDiv').hide();
+  $('#side-order').removeClass('active_menu_link');
+  $('#side-products').removeClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#side-cus-man').addClass('active_menu_link');
+}
+var product = [];
+var connections = [];
+var con_pending_help = [];
+var con_pending = [];
+var con_approved = [];
+var products = [];
+function createDiv(productX){
+	console.log(productX);
+  $('#numOfProducts').text(productX.length);
+  for(var i in productX){
     var d=document.createElement("div");
     var d1=document.createElement("div");
     var d2=document.createElement("div");
@@ -48,14 +87,15 @@ function createDiv(product){
     var img=document.createElement("img");
 	var btnDelete = document.createElement("button");
 	btnDelete.textContent = 'Delete';
-	btnDelete.className = 'btn btn-danger';
+	btnDelete.className = 'btn btn-danger deleteBtn';
+  btnDelete.id = i;
     d.className = 'card my-3';
     d1.className = 'row no-gutters';
     d2.className = 'col-md-4';
     d3.className = 'col-md-8';
     d4.className = 'card-body';
-    h5.className = 'card-title'
-    p1.className = 'card-text'
+    h5.className = 'text-dark card-title'
+    p1.className = 'text-primary card-text'
     p2.className = 'card-text'
     small.className = 'text-muted'
     img.className = 'card-img';
@@ -72,30 +112,160 @@ function createDiv(product){
     p2.appendChild(small)
     d.style.maxWidth = '1040px';
     d.style.height = 'auto';
-    img.src = product[i].imgUrl;
-	img.style.width= '250px';
-	img.style.height= '250px';
-    h5.textContent = product[i].productName;
-    p1.textContent = 'Mrp: ' + product[i].mrp + ' Price: ' + product[i].price;
-    small.textContent = product[i].description;
-	btnDelete.addEventListener('click',() => {
-		deleteProduct(i);
-		return false;
-	});
+    img.src = productX[i].imgUrl;
+	  img.style.width= '250px';
+	  img.style.height= '250px';
+    h5.textContent = productX[i].productName;
+    p1.textContent = 'Mrp: ' + productX[i].mrp + ' Price: ' + productX[i].price;
+    small.textContent = productX[i].description;
+    $(".deleteBtn").click(function() {
+    //   alert(this.id); // or alert($(this).attr('id'));
+    //   alert(product[this.id].productName);
+      firebase.database().ref('users/'+ localStorage.getItem('user') + '/subCategory/' + productX[this.id].category + '/' + product[this.id].productName + '/').remove();
+	//   window.location.reload();
+      return false;
+  });
   }
 }
-function deleteProduct(x){
-	console.log(product[x]['description']);
-	return false;
+
+function createConnectionDiv(con,status){
+    document.getElementById('cuspg').textContent = '';
+    console.log(con);
+    con.forEach(element => {
+       console.log(element); 
+    });
+
+    for(var i in con){
+        var d=document.createElement("div");
+        var d1=document.createElement("div");
+        var d2=document.createElement("div");
+        var d3=document.createElement("div");
+        var d4=document.createElement("div");
+        var h5=document.createElement("h5");
+        var p1=document.createElement("p");
+        var p2=document.createElement("p");
+        var small = document.createElement('small');
+        var img=document.createElement("img");
+        var btnDeleteX = document.createElement("button");
+        btnDeleteX.textContent = 'Accept';
+        btnDeleteX.className = 'btn btn-success pending';
+        // btnDeleteX.id = 'conbtn';
+      	btnDeleteX.id = i;
+        d.className = 'card my-3';
+        d1.className = 'row no-gutters';
+        d2.className = 'col-md-4';
+        d3.className = 'col-md-8';
+        d4.className = 'card-body';
+        h5.className = 'card-title'
+        p1.className = 'card-text'
+        p2.className = 'card-text'
+        small.className = 'text-muted'
+        img.className = 'card-img';
+        document.getElementById('cuspg').appendChild(d);
+        d.appendChild(d1)
+        d1.appendChild(d2)
+        d2.appendChild(img)
+        d1.appendChild(d3)
+        d3.appendChild(d4)
+        d3.appendChild(btnDeleteX)
+        d4.appendChild(h5)
+        d4.appendChild(p1)
+        d4.appendChild(p2)
+        p2.appendChild(small)
+        d.style.maxWidth = '1040px';
+        d.style.height = 'auto';
+        img.src = con[i].profileUrl;
+          img.style.width= '250px';
+          img.style.height= '250px';
+        h5.textContent = con[i].name;
+        p1.innerHTML = '<b class="text-dark">Category</b>: ' + con[i].category + ' <b class="text-dark">Email</b> ' + con[i].email;
+        small.innerHTML = '<b class="text-dark">Address: </b>' + con[i].address + '<b class="text-dark"> PinCode: </b>' + con[i].pinCode + '<b class="text-dark"> Contact: </b>' + con[i].mobileNumber;
+		$(".pending").click(function() {
+			alert(con[this.id].name);
+			firebase.database().ref('connection_users/' + localStorage.getItem('user') + '/' + con[this.id].name + '/').update({
+				status: 'Accepted' 
+			})
+			firebase.database().ref('connections_wholesalers/' + con[this.id].name + '/' +localStorage.getItem('user') + '/').update({
+				status: 'Accepted' 
+			})
+			window.location.reload();
+		})
+      }
+}
+
+function createOrderDiv(order){
+    document.getElementById('orderpg').textContent = '';
+    console.log(order);
+    order.forEach(element => {
+       console.log(element); 
+    });
+
+    for(var i in order){
+        var d=document.createElement("div");
+        var d1=document.createElement("div");
+        var d2=document.createElement("div");
+        var d3=document.createElement("div");
+        var d4=document.createElement("div");
+        var h5=document.createElement("h5");
+        var p1=document.createElement("p");
+        var p2=document.createElement("p");
+        var small = document.createElement('small');
+        var img=document.createElement("img");
+        // btnDeleteX.id = 'conbtn';
+        d.className = 'card my-3';
+        d1.className = 'row no-gutters';
+        d2.className = 'col-md-4';
+        d3.className = 'col-md-8';
+        d4.className = 'card-body';
+        h5.className = 'card-title'
+        p1.className = 'card-text'
+        p2.className = 'card-text'
+        small.className = 'text-muted'
+        img.className = 'card-img';
+        document.getElementById('orderpg').appendChild(d);
+        d.appendChild(d1)
+        d1.appendChild(d2)
+        d2.appendChild(img)
+        d1.appendChild(d3)
+        d3.appendChild(d4)
+        d4.appendChild(h5)
+        d4.appendChild(p1)
+        d4.appendChild(p2)
+        p2.appendChild(small)
+        d.style.maxWidth = '1040px';
+        d.style.height = 'auto';
+        img.src = order[i].imgUrl;
+          img.style.width= '250px';
+          img.style.height= '250px';
+        h5.textContent = order[i].productName;
+        p1.innerHTML = '<b class="text-dark">Category</b>: ' + order[i].subCategory + ' <b class="text-dark">Date Of Order: </b> ' + order[i].date;
+        small.innerHTML = '<b class="text-dark">Qty: </b>' + order[i].totalItems + '<b class="text-dark"> Total Amount of Order: </b>' + order[i].totalPrice + '<b class="text-dark">';
+		
+      }
 }
 
 $('#side-dashboard').click(() => {
   $('#side-dashboard').addClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
+  $('#side-order').removeClass('active_menu_link');
   $('#products').hide();
   $('#side-products').removeClass('active_menu_link');
   $('#dashboardDiv').show();
+  $('#orders').hide();
+  $('#pro-man').hide();
+  $('#cus-man').hide();
+});
+
+$('#side-order').click(() => {
+  $('#side-order').addClass('active_menu_link');
+  $('#side-dashboard').removeClass('active_menu_link');
+  $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-cus-man').removeClass('active_menu_link');
+  $('#products').hide();
+  $('#orders').show();
+  $('#side-products').removeClass('active_menu_link');
+  $('#dashboardDiv').hide();
   $('#pro-man').hide();
   $('#cus-man').hide();
 });
@@ -104,8 +274,10 @@ $('#side-pro-man').click(() => {
   $('#pro-man').show();
   $('#dashboardDiv').hide();
   $('#cus-man').hide();
+  $('#orders').hide();
   $('#products').hide();
   $('#side-products').removeClass('active_menu_link');
+  $('#side-order').removeClass('active_menu_link');
   $('#side-pro-man').addClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
@@ -116,9 +288,11 @@ $('#side-cus-man').click(() => {
   $('#dashboardDiv').hide();
   $('#cus-man').show();
   $('#products').hide();
+  $('#orders').hide();
   $('#side-products').removeClass('active_menu_link');
   $('#side-cus-man').addClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-order').removeClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
 });
 
@@ -127,13 +301,15 @@ $('#side-products').click(() => {
   $('#dashboardDiv').hide();
   $('#cus-man').hide();
   $('#products').show();
+  $('#orders').hide();
   $('#side-products').addClass('active_menu_link');
   $('#side-cus-man').removeClass('active_menu_link');
   $('#side-pro-man').removeClass('active_menu_link');
+  $('#side-order').removeClass('active_menu_link');
   $('#side-dashboard').removeClass('active_menu_link');
 });
 
-$('#addCategory').click(() =>{
+$('#addCategory').click(() => {
   if(($('#subCategory').val() == 'Select' && $('#catName').val() == '') || ($('#subCategory').val() != 'Select' && $('#catName').val() != '')){
     alert('select or add new category');
   } else if($('#proName').val() == ''){
@@ -176,7 +352,8 @@ $('#addCategory').click(() =>{
           price: Price,
           mrp: Mrp,
           description: Description,
-          imgUrl: ih
+          imgUrl: ih,
+		  category: category
         });
         alert('product added');
 		window.location.reload();
@@ -194,10 +371,8 @@ $('#addCategory').click(() =>{
  
   }
 });
-
   auth.onAuthStateChanged(function(user){
     if(user){
-
       console.log(user.displayName);
       localStorage.setItem('user',user.displayName);
 
@@ -205,7 +380,7 @@ $('#addCategory').click(() =>{
 	  firebase.database().ref('users/').once('value').then(function(snapshot){
         if(snapshot.hasChild(user.displayName)){
           console.log('already exist');
-
+		  
       // product management & products code
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
         document.getElementById('logo').src = snapshot.val()['logoUrl'];
@@ -215,16 +390,19 @@ $('#addCategory').click(() =>{
             .find('option')
             .remove()
             .end()
-            $('#subCategory').append(new Option('Select', 'Select'));              
-            console.log(Object.keys(snapshot.val()));
-            Object.keys(snapshot.val()).forEach(element => {
-              $('#subCategory').append(new Option(element, element));              
-            });
+            $('#subCategory').append(new Option('Select', 'Select'));   
+			if(snapshot.val() != null){
+				console.log(Object.keys(snapshot.val()));
+				Object.keys(snapshot.val()).forEach(element => {
+				  $('#subCategory').append(new Option(element, element));              
+				});
+			}           
             products = snapshot.val();
             console.log(products);
             product = []
             for(var pro in products){
               var obj = products[pro];
+			  console.log(obj);
               for(var x in obj){
                 product.push(obj[x]);
               }
@@ -239,7 +417,44 @@ $('#addCategory').click(() =>{
           $('#product-status').text('Add Your First Category of Product.');
         }
       });
+	let op = []
+    let order = []
+      // connection management code
+	  firebase.database().ref('connection_users/' + user.displayName).once('value').then(function(snapshot){
+		  connections = snapshot.val()
+		//   console.log(connections);
+		  for(var i in connections){
+			  var ob = connections[i];
+			  ob['name'] = i;
+			  con_pending_help.push(ob);
+			//   document.getElementById('conbtn').textContent = ob['status'];
+		  }
+		  console.log(con_pending_help);
+		  for(var j in con_pending_help){
+			if(con_pending_help[j]['status'] == 'Pending'){
+				firebase.database().ref('category_wholesalers/' + con_pending_help[j]['category'] + '/' + con_pending_help[j]['name'] + '/').once('value').then(function(snapshot) {
+					op.push(snapshot.val());
+					console.log(op);
+					createConnectionDiv(op,0);
+				});
+			}
+		}
+	  });
 
+	  firebase.database().ref('connection_users/' + user.displayName).once('value').then(function(snapshot) {
+		var con = snapshot.val();
+		for(var i in con){
+			if(con[i]['orders'] != undefined){
+				console.log(con[i]['orders']);
+				for(var x in con[i]['orders']){
+					con[i]['orders'][x]['name'] = i;
+					order.push(con[i]['orders'][x])
+				}
+			}
+		}
+		console.log(order);
+		createOrderDiv(order);
+	  })
       //products sorting code
       firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
         if(snapshot.hasChild('subCategory')){
@@ -303,15 +518,25 @@ $('#addCategory').click(() =>{
   });
   // notification code
       firebase.database().ref('connection_users/'+user.displayName).on("value",(snapshot) => {
-        count_notification = 0
+        count_notification_pending = 0
         snapshot.forEach(element => {
           // console.log(element.val()['status']);  
-          if(element.val()['status'] === 'pending'){
-            count_notification++;
+          if(element.val()['status'] === 'Pending'){
+            count_notification_pending++;
           }          
         });
-        $('#notification').text(count_notification);
-        $('#notification_connection').text(count_notification);
+        $('#notification').text(count_notification_pending);
+        $('#notification_connection').text(count_notification_pending);
+      })
+      firebase.database().ref('connection_users/'+user.displayName).on("value",(snapshot) => {
+        count_notification_accept = 0
+        snapshot.forEach(element => {
+          // console.log(element.val()['status']);  
+          if(element.val()['status'] === 'Accepted'){
+            count_notification_accept++;
+          }          
+        });
+        $('#notification_connection').text(count_notification_accept);
       })
 
         } else{
@@ -344,71 +569,6 @@ $('#addCategory').click(() =>{
       $('#product-user').text(user.displayName);
 
       
-      // // product management & products code
-      // firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
-      //   if(snapshot.hasChild('subCategory')){
-      //     firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
-      //       $('#subCategory')
-      //       .find('option')
-      //       .remove()
-      //       .end()
-      //       $('#subCategory').append(new Option('Select', 'Select'));              
-      //       console.log(Object.keys(snapshot.val()));
-      //       Object.keys(snapshot.val()).forEach(element => {
-      //         $('#subCategory').append(new Option(element, element));              
-      //       });
-      //       products = snapshot.val();
-      //       console.log(products);
-      //       product = []
-      //       for(var pro in products){
-      //         var obj = products[pro];
-      //         for(var x in obj){
-      //           product.push(obj[x]);
-      //         }
-      //       }
-      //       console.log(product);
-      //       if($('#subCategorySort').val() == 'All'){
-      //         $('#productpg').html('');
-      //         createDiv(product)
-      //       }
-      //     });
-      //   } else{
-      //     $('#product-status').text('Add Your First Category of Product.');
-      //   }
-      // });
-
-      // //products sorting code
-      // firebase.database().ref('users/'+ user.displayName).once('value').then(function(snapshot){
-      //   if(snapshot.hasChild('subCategory')){
-      //     firebase.database().ref('users/'+ user.displayName + '/subCategory').on("value",(snapshot) => {
-      //       $('#subCategorySort')
-      //       .find('option')
-      //       .remove()
-      //       .end()
-      //       $('#subCategorySort').append(new Option('All', 'All'));              
-      //       console.log(Object.keys(snapshot.val()));
-      //       Object.keys(snapshot.val()).forEach(element => {
-      //         $('#subCategorySort').append(new Option(element, element));              
-      //       });
-      //     });
-      //   }
-      // });
-
-      // $('#subCategorySort').on('change', function() {
-      //   for(var e in products){
-      //     if(e == this.value){
-      //       $('#productpg').html('');
-      //       console.log(products[e]);
-      //       createDiv(products[e])
-      //     }
-      //   }
-      //   if($('#subCategorySort').val() == 'All'){
-      //     $('#productpg').html('');
-      //     createDiv(product)
-      //   }
-      //   // alert( this.value );
-      // });
-
         console.log('Active user ' + user.displayName);
         document.title = user.displayName;
         document.getElementById('user').innerHTML = user.displayName;

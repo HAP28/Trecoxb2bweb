@@ -81,10 +81,9 @@
 
         <div class="modal-content p-3" style="border-radius: 2rem;">
           <div style="display: flex; margin: 0 auto;" class="mb-3">
-            <h1 id="displayName" class="mt-5 mr-3 text-center"></h1>
             <img src="./images/logo (2).png" id="logo_main" alt="logo" width="120px" height="120px">
+            <h1 id="displayName" class="mt-5 mr-3 text-center ml-3"></h1>
           </div>
-            <input type="file" class="form-control" id="logo_select" autocomplete="off" placeholder="Select Logo" required>
             <!-- <form class="profile-form"> -->
                 <label for="exampleInputPassword1">Category:  </label>
                 <select class="custom-select" id="category" required>
@@ -122,7 +121,6 @@
 document.getElementById('category').disabled = true;
 document.getElementById('contact').disabled = true;
 document.getElementById('location').disabled = true;
-document.getElementById('logo_select').disabled = true;
 
 document.getElementById('btnMain').addEventListener('click',() => {
 document.getElementById('btnMainS').style.display = 'inline-block'

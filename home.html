@@ -42,7 +42,7 @@
                         <i class="fa fa-user fa-2x text-lightblue"></i>
                         <div class="card__inner">
                             <p class="text-primary-p">Number of Products</p>
-                            <span class="font-bold text-title" id="numOfProducts"></span>
+                            <span class="font-bold text-title" id="numOfProducts">0</span>
                         </div>
                     </div>
                     <div class="card">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="charts">
+                <!-- <div class="charts">
                     <div class="charts__left">
                         <div class="charts__left__title">
                             <div>
@@ -99,7 +99,27 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <div class="container bg-success px-5 py-3">
+                    <!-- <h3 class="text-center mt-5 mb-5 font-weight-bold title text-dark" style="font-size: 1.6rem;">WHY CHOOSE US ?</h3> -->
+                    <div class="row">
+                      <div class="col-md-6 about-us text-light" style="font-size: 1rem;">
+                        <p class="about-title text-light"><b>New in our services ?</b></p>
+                        <ul>
+                          <li>Understand our client goals first</li>
+                          <li>New business stratergies</li>
+                          <li>Believe in doing business with honesty</li>
+                          <li>Client's satisfaction is our motto</li>
+                          <li>Easy inventory management</li>
+                          <li>Fast &amp; Secure web server</li>
+                          <li>24/7 Customer Services</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6" style="text-align: right;">
+                        <img src="./images/about.png" class="img-fluid" width="320px">
+                      </div>
+                    </div>
+                  </div>
             </div>
             <!-- product mnagement -->
             <div class="main__container" id="pro-man" style="display: none;">
@@ -148,15 +168,22 @@
             </div>
             <!-- Customer mnagement -->
             <div class="main__container" id="cus-man" style="display: none;">
-                <img id="customerImage" alt="image" height="200px" width="200px">
+                <h1 class="text-primary">Wholesalers</h1>               
+                <a id="cuspg" style="text-decoration: none;" class="text-dark"></a>
             </div>
             <!-- Products -->
             <div class="main__container" id="products" style="display: none;">
+                <h1 class="text-primary">Products</h1>               
                 <p class="text-primary">Sort by:</p> 
                 <select name="category" class="form-control mt-3" id="subCategorySort">
                     <option selected>Select</option>
                 </select>
-                <a href="" id="productpg" style="text-decoration: none;"></a>
+                <a id="productpg" style="text-decoration: none;" class="text-dark"></a>
+            </div>
+            <!-- Orders -->
+            <div class="main__container" id="orders" style="display: none;">
+                <h1 class="text-primary">Orders</h1>               
+                <a id="orderpg" style="text-decoration: none;" class="text-dark"></a>
             </div>
             
         </main>
@@ -183,12 +210,12 @@
                 <h2>MNG</h2>
                 <div class="sidebar_link" id="side-cus-man">
                     <i class="fa fa-user-secret"></i>
-                    <a href="#cust">Customer Management</a>
+                    <a href="#cus-man">Customer Management</a>
                     <span id="notification" style="border-radius: 50%; width: 20px; height: 20px; background-color: red; position: absolute; left: 250px; padding-left: 5px;">0</span>
                 </div>
-                <div class="sidebar_link">
+                <div class="sidebar_link" id="side-order">
                     <i class="fa fa-building"></i>
-                    <a href="#">Company Management</a>
+                    <a href="#orders">Orders</a>
                 </div>
                 <div class="sidebar_link" id="side-pro-man">
                     <i class="fa fa-wrench"></i>
@@ -223,11 +250,11 @@
                   </select>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Contact No.</label>
-                  <input type="number" class="form-control my-3" id="contact" placeholder="Contact Number" required>
+                  <input type="number" class="form-control my-3" id="contact" placeholder="Contact Number" required autocomplete="off" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Location</label>
-                    <input type="text" class="form-control my-3" id="location" placeholder="Location" required>
+                    <input type="text" class="form-control my-3" id="location" placeholder="Location" required autocomplete="off" autofocus>
                 </div>
                 <button type="submit" class="btn btn-primary my-3" id="profileFormSubmit">Submit</button> <p id="uploading"></p>
             </form>
@@ -280,6 +307,7 @@
         }
 
     </script>
+
     <script src="./jsnew/jquery.js"></script>
     <script>
         console.log(document.getElementById('logo_main').src);
@@ -289,7 +317,6 @@
     </script>
     <script src="./jsnew/index.js"></script>
     <script src="./jsnew/home.js"></script>
- 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>
