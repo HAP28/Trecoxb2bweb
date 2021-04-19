@@ -237,7 +237,7 @@ function createOrderDiv(order){
         img.src = order[i].imgUrl;
           img.style.width= '250px';
           img.style.height= '250px';
-        h5.textContent = order[i].productName;
+        h5.innerHTML = '<b> Order by: ' + order[i].name + '</b> </br> <code>' + order[i].productName + '</code>';
         p1.innerHTML = '<b class="text-dark">Category</b>: ' + order[i].subCategory + ' <b class="text-dark">Date Of Order: </b> ' + order[i].date;
         small.innerHTML = '<b class="text-dark">Qty: </b>' + order[i].totalItems + '<b class="text-dark"> Total Amount of Order: </b>' + order[i].totalPrice + '<b class="text-dark">';
 		
