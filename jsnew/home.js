@@ -194,6 +194,7 @@ function createConnectionDiv(con,status){
 }
 
 function createOrderDiv(order){
+    $('#order_notification').text(order.length);
     document.getElementById('orderpg').textContent = '';
     console.log(order);
     order.forEach(element => {
